@@ -119,7 +119,7 @@ const ProfileImageModal = ({
           
           {/* 모달 컨텐츠 */}
           <motion.div 
-            className="bg-white rounded-xl shadow-2xl overflow-hidden z-10 max-w-5xl w-full max-h-[90vh] relative flex flex-col md:flex-row"
+            className="bg-white rounded-xl shadow-2xl overflow-y-auto z-10 max-w-5xl w-full max-h-[90vh] relative flex flex-col"
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -136,47 +136,37 @@ const ProfileImageModal = ({
             </button>
             
             {/* 대형 이미지 섹션 */}
-            <div className="md:w-2/3 relative overflow-hidden h-[60vh] md:h-[80vh]">
-              <motion.img 
+            <div className="w-full bg-gray-100">
+              <img 
                 src={imgError ? "/images/default.jpg" : profile.avatarUrl} 
                 alt={profile.displayName}
                 onError={() => setImgError(true)}
-                className="w-full h-full object-cover object-center"
-                initial={{ scale: 1 }}
-                animate={{ scale: [1, 1.02, 1] }}
-                transition={{ 
-                  duration: 10, 
-                  repeat: Infinity, 
-                  repeatType: "reverse" 
-                }}
+                className="w-full max-h-[40vh] md:max-h-[50vh] object-contain mx-auto"
               />
               
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-                <div className="p-8 text-white">
-                  <h2 className="text-4xl font-bold love-title mb-2">{profile.displayName}</h2>
-                  <p className="text-white/90 text-xl">{profile.location}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {profile.interests.slice(0, 3).map((interest, idx) => (
-                      <span key={idx} className="badge bg-love-light/30 text-white border-none p-3">
-                        {interest}
-                      </span>
-                    ))}
-                  </div>
+              <div className="bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
+                <h2 className="text-3xl font-bold love-title mb-1">{profile.displayName}</h2>
+                <p className="text-white/90 text-lg">{profile.location}</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {profile.interests.slice(0, 3).map((interest, idx) => (
+                    <span key={idx} className="badge bg-love-light/30 text-white border-none p-3">
+                      {interest}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
             
-            {/* 심장 박동수 측정 섹션 */}
-            <div className="md:w-1/3 p-6 flex flex-col overflow-y-auto">
+            {/* 심장 박동수 측정 섹션 - 명확하게 구분되도록 배경색 변경 */}
+            <div className="p-6 flex flex-col bg-white">
               <h3 className="text-2xl font-bold love-title mb-4">
                 <HeartIcon size={24} color="#ff9ebb" fill={true} className="inline-block mr-2" />
                 {isHeartRateComplete ? '심장 박동 결과' : '심장 박동 측정'}
               </h3>
               
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 mb-4">
                 {isHeartRateComplete ? 
-                  `${profile.displayName}님의
-                  사진을 보면서 느끼는 설렘을 측정했습니다.` : 
+                  `${profile.displayName}님의 사진을 보면서 느끼는 설렘을 측정했습니다.` : 
                   `${profile.displayName}님의 사진을 보며 당신의 심장이 어떻게 반응하는지 측정해보세요. 진짜 설렘이 있어야 매칭이 가능합니다!`
                 }
               </p>
@@ -189,7 +179,7 @@ const ProfileImageModal = ({
                 />
               </div>
               
-              <div className="mt-auto pt-4 border-t">
+              <div className="mt-4 pt-4 border-t">
                 <button 
                   onClick={onClose}
                   className="btn btn-outline w-full border-love-pink text-love-pink hover:bg-love-light/20 hover:border-love-pink"

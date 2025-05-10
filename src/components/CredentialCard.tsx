@@ -6,20 +6,25 @@ interface CredentialCardProps {
 }
 
 const CredentialCard = ({ credential, showDetails = false }: CredentialCardProps) => {
+  // credentialSubject가 없는 경우를 대비한 안전한 접근
+  const subject = credential?.credentialSubject || {};
+
   const getCredentialIcon = () => {
-    if (credential.credentialSubject.kyc) {
+    if (!subject) return getDefaultIcon();
+
+    if (subject.kyc) {
       return (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
         </svg>
       );
-    } else if (credential.credentialSubject.age) {
+    } else if (subject.age) {
       return (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
       );
-    } else if (credential.credentialSubject.institution) {
+    } else if (subject.institution) {
       return (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path d="M12 14l9-5-9-5-9 5 9 5z" />
@@ -28,16 +33,20 @@ const CredentialCard = ({ credential, showDetails = false }: CredentialCardProps
         </svg>
       );
     } else {
-      return (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-        </svg>
-      );
+      return getDefaultIcon();
     }
   };
 
+  const getDefaultIcon = () => {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+      </svg>
+    );
+  };
+
   const getCredentialTitle = () => {
-    const subject = credential.credentialSubject;
+    if (!subject) return '검증된 자격 증명';
     
     if (subject.kyc) {
       return '신원 검증됨';
@@ -51,7 +60,7 @@ const CredentialCard = ({ credential, showDetails = false }: CredentialCardProps
   };
 
   const getCredentialColor = () => {
-    const subject = credential.credentialSubject;
+    if (!subject) return 'bg-gray-100 text-gray-800';
     
     if (subject.kyc) {
       return 'bg-red-100 text-red-800';
@@ -64,8 +73,8 @@ const CredentialCard = ({ credential, showDetails = false }: CredentialCardProps
     }
   };
 
-  const isActive = credential.credentialStatus?.type === 'T3RevocationRegistry';
-  const isRevoked = credential.credentialStatus?.type === 'T3RevocationRegistry-revoked';
+  const isActive = credential?.credentialStatus?.type === 'T3RevocationRegistry';
+  const isRevoked = credential?.credentialStatus?.type === 'T3RevocationRegistry-revoked';
 
   // DID를 간략화하는 함수 추가
   const formatDid = (did: string) => {
@@ -77,6 +86,23 @@ const CredentialCard = ({ credential, showDetails = false }: CredentialCardProps
     }
     return did;
   };
+
+  // 자격 증명 정보가 없는 경우에 대한 처리
+  if (!credential) {
+    return (
+      <div className="rounded-lg p-4 shadow-sm bg-gray-100 text-gray-800">
+        <div className="flex items-center">
+          <div className="mr-3 text-lg">
+            {getDefaultIcon()}
+          </div>
+          <div>
+            <h3 className="font-semibold">정보 없음</h3>
+            <span className="text-xs font-medium bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded">오류</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`rounded-lg p-4 shadow-sm ${getCredentialColor()}`}>
@@ -96,8 +122,8 @@ const CredentialCard = ({ credential, showDetails = false }: CredentialCardProps
       
       {showDetails && (
         <div className="mt-3 text-sm">
-          <p className="text-xs truncate mb-1">발급자: {formatDid(credential.issuer)}</p>
-          <p>발급일: {new Date(credential.validFrom).toLocaleDateString('ko-KR')}</p>
+          <p className="text-xs truncate mb-1">발급자: {formatDid(credential.issuer || '')}</p>
+          <p>발급일: {credential.validFrom ? new Date(credential.validFrom).toLocaleDateString('ko-KR') : '정보 없음'}</p>
           {credential.validUntil && (
             <p>만료일: {new Date(credential.validUntil).toLocaleDateString('ko-KR')}</p>
           )}
