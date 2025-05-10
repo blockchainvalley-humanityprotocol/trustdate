@@ -1,0 +1,1 @@
+프로젝트를 시작하기 전에:\n\n1. .env.example 파일을 복사하여 .env.local 파일을 생성하세요\n2. 발급받은 API 키로 NEXT_PUBLIC_HUMANITY_API_KEY 값을 업데이트하세요\n3. npm install을 실행한 후 npm run dev로 개발 서버를 시작하세요\n\n주의: .env 파일에는 실제 API 키를 포함하지 마세요. 이 파일은 git에 올라가지 않도록 .gitignore에 추가되어 있습니다.
