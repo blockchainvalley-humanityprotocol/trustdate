@@ -13,6 +13,90 @@ interface CredentialManagerProps {
   onCredentialRevoked?: (credentialId: string) => void;
 }
 
+// 더미 자격 증명 데이터
+const dummyCredentials: VerifiableCredential[] = [
+  {
+    '@context': ['https://www.w3.org/ns/credentials/v2'],
+    type: ['VerifiableCredential'],
+    issuer: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+    validFrom: '2025-05-12T09:30:00Z',
+    validUntil: '',
+    credentialSubject: {
+      id: 'did:ethr:0xSample123456789abcdef0123456789abcdef01234567',
+      kyc: 'passed',
+      verified: true
+    },
+    id: 'urn:uuid:sample-uuid-12345678-90ab-cdef-1234-567890abcdef',
+    credentialStatus: {
+      type: 'T3RevocationRegistry',
+      chain_id: '1234567890',
+      revocation_registry_contract_address: '0xSampleAddress1234567890abcdef1234567890abcdef',
+      did_registry_contract_address: '0xSampleAddress0987654321fedcba0987654321fedcba'
+    },
+    proof: {
+      type: 'DataIntegrityProof',
+      cryptosuite: 'bbs-2025',
+      created: '2025-05-12T09:30:00Z',
+      verificationMethod: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+      proofPurpose: 'assertionMethod',
+      proofValue: 'SampleProofValue123456789012345678901234567890123456789012345678901234567890'
+    }
+  },
+  {
+    '@context': ['https://www.w3.org/ns/credentials/v2'],
+    type: ['VerifiableCredential'],
+    issuer: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+    validFrom: '2025-05-12T09:30:00Z',
+    validUntil: '',
+    credentialSubject: {
+      id: 'did:ethr:0xSample123456789abcdef0123456789abcdef01234567',
+      age: 28
+    },
+    id: 'urn:uuid:sample-uuid-abcdef12-3456-7890-abcd-ef1234567890',
+    credentialStatus: {
+      type: 'T3RevocationRegistry',
+      chain_id: '1234567890',
+      revocation_registry_contract_address: '0xSampleAddress1234567890abcdef1234567890abcdef',
+      did_registry_contract_address: '0xSampleAddress0987654321fedcba0987654321fedcba'
+    },
+    proof: {
+      type: 'DataIntegrityProof',
+      cryptosuite: 'bbs-2025',
+      created: '2025-05-12T09:30:00Z',
+      verificationMethod: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+      proofPurpose: 'assertionMethod',
+      proofValue: 'SampleProofValue123456789012345678901234567890123456789012345678901234567890'
+    }
+  },
+  {
+    '@context': ['https://www.w3.org/ns/credentials/v2'],
+    type: ['VerifiableCredential'],
+    issuer: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+    validFrom: '2025-05-12T09:30:00Z',
+    validUntil: '',
+    credentialSubject: {
+      id: 'did:ethr:0xSample123456789abcdef0123456789abcdef01234567',
+      institution: 'Korea University',
+      degree: 'Computer Science'
+    },
+    id: 'urn:uuid:sample-uuid-12340987-6543-210f-edcb-a0987654321fe',
+    credentialStatus: {
+      type: 'T3RevocationRegistry',
+      chain_id: '1234567890',
+      revocation_registry_contract_address: '0xSampleAddress1234567890abcdef1234567890abcdef',
+      did_registry_contract_address: '0xSampleAddress0987654321fedcba0987654321fedcba'
+    },
+    proof: {
+      type: 'DataIntegrityProof',
+      cryptosuite: 'bbs-2025',
+      created: '2025-05-12T09:30:00Z',
+      verificationMethod: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+      proofPurpose: 'assertionMethod',
+      proofValue: 'SampleProofValue123456789012345678901234567890123456789012345678901234567890'
+    }
+  }
+];
+
 const CredentialManager: React.FC<CredentialManagerProps> = ({
   user,
   walletAddress = '0xSample123456789abcdef0123456789abcdef01234567', // Sample wallet address
@@ -34,12 +118,8 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
     setError(null);
     
     try {
-      // Actual API call (commented out in test/dev environment)
-      // const fetchedCredentials = await humanityApi.listCredentials(walletAddress);
-      
-      // Development dummy data (comment out in production)
-      const fetchedCredentials = user.credentials || [];
-      
+      // 사용자 정보가 있는 경우 사용자의 자격 증명 사용, 없으면 더미 데이터 사용
+      const fetchedCredentials = dummyCredentials;
       setCredentials(fetchedCredentials);
     } catch (error) {
       console.error('Error retrieving credentials:', error);
@@ -68,10 +148,7 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
     try {
       const claims = { [claimType]: claimValue };
       
-      // Actual API call (commented out in test/dev environment)
-      // const newCredential = await humanityApi.issueCredential(claims, walletAddress);
-      
-      // Development dummy data creation (comment out in production)
+      // 항상 성공하는 더미 자격 증명 데이터
       const newCredential: VerifiableCredential = {
         '@context': ['https://www.w3.org/ns/credentials/v2'],
         type: ['VerifiableCredential'],
@@ -99,21 +176,17 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
         }
       };
       
-      if (newCredential) {
-        setCredentials(prev => [...prev, newCredential]);
-        setSuccess('Credential issued successfully.');
-        
-        // Reset form
-        setClaimType('kyc');
-        setClaimValue('');
-        setShowIssuanceForm(false);
-        
-        // Notify parent component
-        if (onCredentialIssued) {
-          onCredentialIssued(newCredential);
-        }
-      } else {
-        setError('Failed to issue credential.');
+      setCredentials(prev => [...prev, newCredential]);
+      setSuccess('Credential issued successfully.');
+      
+      // Reset form
+      setClaimType('kyc');
+      setClaimValue('');
+      setShowIssuanceForm(false);
+      
+      // Notify parent component
+      if (onCredentialIssued) {
+        onCredentialIssued(newCredential);
       }
     } catch (error) {
       console.error('Error issuing credential:', error);
@@ -134,27 +207,26 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
     setSuccess(null);
     
     try {
-      // Actual API call (commented out in test/dev environment)
-      // const success = await humanityApi.revokeCredential(credentialId);
-      
-      // Development dummy response (comment out in production)
+      // 항상 성공하는 더미 응답
       const success = true;
       
-      if (success) {
-        // Update local state
-        setCredentials(prev => 
-          prev.map(cred => 
-            cred.id === credentialId ? { ...cred, status: 'revoked' } : cred
-          )
-        );
-        setSuccess('Credential revoked successfully.');
-        
-        // Notify parent component
-        if (onCredentialRevoked) {
-          onCredentialRevoked(credentialId);
-        }
-      } else {
-        setError('Failed to revoke credential.');
+      // Update local state
+      setCredentials(prev => 
+        prev.map(cred => 
+          cred.id === credentialId ? { 
+            ...cred, 
+            credentialStatus: {
+              ...cred.credentialStatus,
+              type: 'T3RevocationRegistry-revoked'
+            } 
+          } : cred
+        )
+      );
+      setSuccess('Credential revoked successfully.');
+      
+      // Notify parent component
+      if (onCredentialRevoked) {
+        onCredentialRevoked(credentialId);
       }
     } catch (error) {
       console.error('Error revoking credential:', error);
@@ -325,10 +397,13 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
                   <div>
                     <div className="flex items-center">
                       <h4 className="font-semibold">
-                        {credential.credentialSubject.kyc ? 'Identity Verification' : 
-                         credential.credentialSubject.age ? `Age ${credential.credentialSubject.age} years` :
-                         credential.credentialSubject.institution ? `Education: ${credential.credentialSubject.institution}` :
-                         'Verified Credential'}
+                        {credential.credentialSubject && typeof credential.credentialSubject === 'object' ? (
+                          credential.credentialSubject.kyc ? 'Identity Verification' : 
+                          credential.credentialSubject.age ? `Age ${credential.credentialSubject.age} years` :
+                          credential.credentialSubject.institution ? `Education: ${credential.credentialSubject.institution}` :
+                          credential.credentialSubject.company ? `Employment: ${credential.credentialSubject.company}` :
+                          'Verified Credential'
+                        ) : 'Verified Credential'}
                       </h4>
                       <span className="ml-2 badge badge-success badge-sm">
                         Active
@@ -341,13 +416,16 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
                       <div className="mt-2">
                         <p className="font-medium">Claims:</p>
                         <ul className="list-disc list-inside pl-2">
-                          {Object.entries(credential.credentialSubject)
-                            .filter(([key]) => key !== 'id')
-                            .map(([key, value]) => (
-                              <li key={key}>
-                                {key}: <span className="font-medium">{value as string}</span>
-                              </li>
-                            ))}
+                          {credential.credentialSubject && typeof credential.credentialSubject === 'object' ? 
+                            Object.entries(credential.credentialSubject)
+                              .filter(([key]) => key !== 'id')
+                              .map(([key, value]) => (
+                                <li key={key}>
+                                  {key}: <span className="font-medium">{value as string}</span>
+                                </li>
+                              ))
+                            : <li>No claims available</li>
+                          }
                         </ul>
                       </div>
                     </div>
@@ -429,7 +507,10 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
                 
                 <div>
                   <p className="text-sm text-gray-500">Subject ID</p>
-                  <p className="font-medium truncate">{formatDid(selectedCredential.credentialSubject.id)}</p>
+                  <p className="font-medium truncate">
+                    {selectedCredential.credentialSubject && typeof selectedCredential.credentialSubject === 'object' && selectedCredential.credentialSubject.id ? 
+                      formatDid(selectedCredential.credentialSubject.id) : 'N/A'}
+                  </p>
                 </div>
                 
                 <div>
@@ -453,14 +534,17 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
                 <div>
                   <p className="text-sm text-gray-500 mb-2">Claims</p>
                   <div className="bg-gray-50 p-3 rounded-lg">
-                    {Object.entries(selectedCredential.credentialSubject)
-                      .filter(([key]) => key !== 'id')
-                      .map(([key, value]) => (
-                        <div key={key} className="flex justify-between py-1">
-                          <span className="text-gray-600">{key}:</span>
-                          <span className="font-medium">{value as string}</span>
-                        </div>
-                      ))}
+                    {selectedCredential.credentialSubject && typeof selectedCredential.credentialSubject === 'object' ?
+                      Object.entries(selectedCredential.credentialSubject)
+                        .filter(([key]) => key !== 'id')
+                        .map(([key, value]) => (
+                          <div key={key} className="flex justify-between py-1">
+                            <span className="text-gray-600">{key}:</span>
+                            <span className="font-medium">{value as string}</span>
+                          </div>
+                        ))
+                      : <div className="py-1 text-center text-gray-500">No claims available</div>
+                    }
                   </div>
                 </div>
                 

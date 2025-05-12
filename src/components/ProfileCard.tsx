@@ -223,12 +223,14 @@ const ProfileCard = ({
                 <div className="my-4">
                   <button 
                     onClick={openImageModal}
-                    className="btn btn-primary w-full gap-2"
+                    className={`btn w-full gap-2 ${isPassedHeartRateThreshold ? 'btn-success' : heartRateData ? 'btn-error' : 'btn-primary'}`}
                   >
-                    <HeartIcon size={20} fill={true} color="white" />
-                    {isPassedHeartRateThreshold ? 
-                      "Heart Rate Check Complete!" : 
-                      "Measure Heart Rate with Full Photo"}
+                    <HeartIcon size={20} fill={true} color="white" pulse={isPassedHeartRateThreshold} />
+                    {isPassedHeartRateThreshold 
+                      ? "Heart Rate Check Passed!" 
+                      : heartRateData 
+                        ? "Heart Rate Too Low! Try Again" 
+                        : "Measure Heart Rate with Full Photo"}
                   </button>
                 </div>
               )}
@@ -267,18 +269,20 @@ const ProfileCard = ({
                 {!isMatched && !isPending && onMatch && (
                   <motion.button 
                     onClick={handleMatchClick} 
-                    className={`heart-button px-6 py-3 gap-2 ${!isPassedHeartRateThreshold && showHeartRateMonitor ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    disabled={showHeartRateMonitor && !isPassedHeartRateThreshold}
-                    whileHover={{ scale: isPassedHeartRateThreshold || !showHeartRateMonitor ? 1.05 : 1 }}
-                    whileTap={{ scale: isPassedHeartRateThreshold || !showHeartRateMonitor ? 0.95 : 1 }}
+                    className={`heart-button px-6 py-3 gap-2 ${!heartRateData ? 'opacity-50 cursor-not-allowed' : !isPassedHeartRateThreshold && heartRateData ? 'opacity-50 cursor-not-allowed bg-red-400 hover:bg-red-500' : ''}`}
+                    disabled={!heartRateData || (showHeartRateMonitor && !isPassedHeartRateThreshold)}
+                    whileHover={{ scale: !heartRateData || (showHeartRateMonitor && !isPassedHeartRateThreshold) ? 1 : 1.05 }}
+                    whileTap={{ scale: !heartRateData || (showHeartRateMonitor && !isPassedHeartRateThreshold) ? 1 : 0.95 }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.5 }}
                   >
                     <HeartIcon size={24} color="white" fill={true} pulse={isPassedHeartRateThreshold} />
-                    {showHeartRateMonitor && !isPassedHeartRateThreshold
-                      ? "Heart Rate Measurement Required"
-                      : "Show Interest"}
+                    {!heartRateData
+                      ? "Heart Rate Check Required"
+                      : !isPassedHeartRateThreshold
+                        ? "Heart Rate Too Low"
+                        : "Show Interest"}
                   </motion.button>
                 )}
                 

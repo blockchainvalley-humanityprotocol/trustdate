@@ -143,11 +143,11 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
   // Return positive message based on heart rate change
   const getInterestMessage = () => {
     if (matchPossible) {
-      return "You're feeling excitement for this profile! Matching is possible.";
+      return "Your heart rate increased significantly! Matching is possible!";
     } else if (percentageChange && percentageChange > 0) {
-      return "There's a spark of interest! Keep exploring their profile.";
+      return "Your heart rate increased, but not enough for matching.";
     } else {
-      return "Take your time to explore more and see if interest grows.";
+      return "Your heart rate didn't increase. Try viewing the profile again.";
     }
   };
 
@@ -157,6 +157,15 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
       
       {status === MeasurementStatus.COMPLETED ? (
         <div className="space-y-4">
+          <div className={`p-3 rounded-lg text-center ${matchPossible ? 'bg-green-100 text-green-800' : percentageChange && percentageChange > 0 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}`}>
+            <p className="font-semibold">
+              {matchPossible ? 'Match Eligible!' : 'Not Eligible for Matching'}
+            </p>
+            <p className="text-sm">
+              {matchPossible ? 'Your heart rate increased by 15% or more' : 'Your heart rate must increase by at least 15%'}
+            </p>
+          </div>
+          
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center">
               <p className="text-sm text-gray-500">Baseline Heart Rate</p>
@@ -171,7 +180,7 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
           <div className="flex items-center justify-center">
             <div className="text-center">
               <p className="text-sm text-gray-500">Heart Rate Change</p>
-              <p className={`text-2xl font-bold ${percentageChange && percentageChange >= 5 ? 'text-red-500' : percentageChange && percentageChange < 0 ? 'text-blue-500' : 'text-gray-700'}`}>
+              <p className={`text-2xl font-bold ${percentageChange && percentageChange >= 15 ? 'text-green-500' : percentageChange && percentageChange >= 5 ? 'text-yellow-500' : percentageChange && percentageChange < 0 ? 'text-blue-500' : 'text-gray-700'}`}>
                 {percentageChange && percentageChange > 0 ? '+' : ''}{percentageChange?.toFixed(1)}%
               </p>
             </div>
@@ -179,7 +188,7 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
           
           <div className="flex justify-center items-center my-2">
             <div className={`w-16 h-16 rounded-full ${getInterestColor()} flex items-center justify-center`}>
-              <svg className="w-10 h-10 text-white animate-pulse" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <svg className={`w-10 h-10 text-white ${matchPossible ? 'animate-pulse' : ''}`} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"></path>
               </svg>
             </div>
@@ -187,7 +196,7 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
           
           <div className="text-center">
             <p className="font-medium">
-              <span className={matchPossible ? 'text-green-600' : percentageChange && percentageChange > 0 ? 'text-yellow-600' : 'text-gray-600'}>
+              <span className={matchPossible ? 'text-green-600' : percentageChange && percentageChange > 0 ? 'text-yellow-600' : 'text-red-600'}>
                 {getInterestMessage()}
               </span>
             </p>
@@ -196,7 +205,7 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
           <button 
             onClick={startMeasurement}
             disabled={isLoading}
-            className="btn btn-outline btn-sm w-full mt-2"
+            className={`btn w-full mt-2 ${matchPossible ? 'btn-success' : 'btn-outline'}`}
           >
             Measure Again
           </button>

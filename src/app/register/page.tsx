@@ -56,10 +56,27 @@ export default function Register() {
     setError('');
     
     try {
+      if (typeof window === 'undefined' || !window.ethereum) {
+        throw new Error('MetaMask is not installed. Please install MetaMask.');
+      }
+      
+      // Check if MetaMask is locked
+      try {
+        const accounts = await window.ethereum.request({ 
+          method: 'eth_accounts'
+        });
+        
+        if (accounts.length === 0) {
+          console.log('MetaMask is locked or no account is selected.');
+        }
+      } catch (acctError) {
+        console.error('Error checking accounts:', acctError);
+      }
+      
       const result = await metamaskAuth.connectWallet();
       
       if (!result.success) {
-        throw new Error(result.error || 'Failed to connect to Metamask');
+        throw new Error(result.error || 'Failed to connect to MetaMask.');
       }
       
       const address = result.address || '';
@@ -72,13 +89,14 @@ export default function Register() {
       const signResult = await metamaskAuth.signMessage(message);
       
       if (!signResult.success) {
-        throw new Error(signResult.error || 'Failed to sign message');
+        throw new Error(signResult.error || 'Failed to sign the message.');
       }
       
       // Move to next step
       setCurrentStep(RegistrationStep.PERSONAL_INFO);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Authentication request failed.');
+      console.error('MetaMask connection error:', err);
+      setError(err instanceof Error ? err.message : 'An error occurred during registration.');
     } finally {
       setLoading(false);
     }
@@ -174,23 +192,126 @@ export default function Register() {
     setCurrentStep(prev => prev + 1 as RegistrationStep);
   };
   
-  // Form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Submit registration
+  const submitRegistration = async () => {
     setLoading(true);
     setError('');
     
     try {
-      // In actual implementation, call server API to register user
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Here we would normally make an API call to submit registration
+      // For demo purposes, we'll simulate a successful registration
       
-      // Move to next step
-      goToNextStep();
+      // Dummy credential data
+      const dummyCredentials = [
+        {
+          '@context': ['https://www.w3.org/ns/credentials/v2'],
+          type: ['VerifiableCredential'],
+          issuer: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+          validFrom: '2025-05-12T09:30:00Z',
+          validUntil: '',
+          credentialSubject: {
+            id: 'did:ethr:0xSample123456789abcdef0123456789abcdef01234567',
+            kyc: 'passed',
+            verified: true
+          },
+          id: 'urn:uuid:sample-uuid-12345678-90ab-cdef-1234-567890abcdef',
+          credentialStatus: {
+            type: 'T3RevocationRegistry',
+            chain_id: '1234567890',
+            revocation_registry_contract_address: '0xSampleAddress1234567890abcdef1234567890abcdef',
+            did_registry_contract_address: '0xSampleAddress0987654321fedcba0987654321fedcba'
+          },
+          proof: {
+            type: 'DataIntegrityProof',
+            cryptosuite: 'bbs-2025',
+            created: '2025-05-12T09:30:00Z',
+            verificationMethod: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+            proofPurpose: 'assertionMethod',
+            proofValue: 'SampleProofValue123456789012345678901234567890123456789012345678901234567890'
+          }
+        },
+        {
+          '@context': ['https://www.w3.org/ns/credentials/v2'],
+          type: ['VerifiableCredential'],
+          issuer: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+          validFrom: '2025-05-12T09:30:00Z',
+          validUntil: '',
+          credentialSubject: {
+            id: 'did:ethr:0xSample123456789abcdef0123456789abcdef01234567',
+            age: 28
+          },
+          id: 'urn:uuid:sample-uuid-abcdef12-3456-7890-abcd-ef1234567890',
+          credentialStatus: {
+            type: 'T3RevocationRegistry',
+            chain_id: '1234567890',
+            revocation_registry_contract_address: '0xSampleAddress1234567890abcdef1234567890abcdef',
+            did_registry_contract_address: '0xSampleAddress0987654321fedcba0987654321fedcba'
+          },
+          proof: {
+            type: 'DataIntegrityProof',
+            cryptosuite: 'bbs-2025',
+            created: '2025-05-12T09:30:00Z',
+            verificationMethod: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+            proofPurpose: 'assertionMethod',
+            proofValue: 'SampleProofValue123456789012345678901234567890123456789012345678901234567890'
+          }
+        },
+        {
+          '@context': ['https://www.w3.org/ns/credentials/v2'],
+          type: ['VerifiableCredential'],
+          issuer: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+          validFrom: '2025-05-12T09:30:00Z',
+          validUntil: '',
+          credentialSubject: {
+            id: 'did:ethr:0xSample123456789abcdef0123456789abcdef01234567',
+            institution: 'Korea University',
+            degree: 'Computer Science'
+          },
+          id: 'urn:uuid:sample-uuid-12340987-6543-210f-edcb-a0987654321fe',
+          credentialStatus: {
+            type: 'T3RevocationRegistry',
+            chain_id: '1234567890',
+            revocation_registry_contract_address: '0xSampleAddress1234567890abcdef1234567890abcdef',
+            did_registry_contract_address: '0xSampleAddress0987654321fedcba0987654321fedcba'
+          },
+          proof: {
+            type: 'DataIntegrityProof',
+            cryptosuite: 'bbs-2025',
+            created: '2025-05-12T09:30:00Z',
+            verificationMethod: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
+            proofPurpose: 'assertionMethod',
+            proofValue: 'SampleProofValue123456789012345678901234567890123456789012345678901234567890'
+          }
+        }
+      ];
+      
+      // Save user information to local storage
+      const userData = {
+        id: 'user' + Date.now(), // Generate temporary ID
+        walletAddress,
+        displayName: formData.displayName,
+        email: formData.email,
+        bio: formData.bio,
+        location: formData.location,
+        interests: formData.interests,
+        profileImage: formData.profileImage ? URL.createObjectURL(formData.profileImage) : '/images/default.jpg',
+        credentials: dummyCredentials, // Use dummy credentials
+        matches: [],
+        conversations: [],
+        createdAt: new Date().toISOString(),
+        lastActive: new Date().toISOString()
+      };
+      
+      localStorage.setItem('userData', JSON.stringify(userData));
       
       setTimeout(() => {
-        router.push('/profile');
-      }, 3000);
+        setCurrentStep(RegistrationStep.COMPLETE);
+        setTimeout(() => {
+          router.push('/profile');
+        }, 2000);
+      }, 1500);
     } catch (err) {
+      console.error('Registration error:', err);
       setError(err instanceof Error ? err.message : 'An error occurred during registration.');
     } finally {
       setLoading(false);
@@ -311,7 +432,7 @@ export default function Register() {
   
   // Render credentials form
   const renderCredentialsForm = () => (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={(e) => { e.preventDefault(); submitRegistration(); }} className="space-y-6">
       <h3 className="text-lg font-semibold mb-4">Request Credentials (Optional)</h3>
       <p className="text-gray-600 mb-4">
         Securely verify your information through Humanity Protocol to create a more trustworthy profile.
@@ -453,7 +574,9 @@ export default function Register() {
           alt="Metamask Logo" 
           className="w-24 h-24 mx-auto"
           onError={(e) => {
-            e.currentTarget.src = 'https://raw.githubusercontent.com/MetaMask/brand-resources/master/SVG/metamask-fox.svg';
+            console.error("Error loading MetaMask logo:", e);
+            e.currentTarget.onerror = null; // Prevent infinite loop
+            e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg";
           }}
         />
       </div>
@@ -461,7 +584,7 @@ export default function Register() {
       <h3 className="text-xl font-semibold">Connect Metamask Wallet</h3>
       <p className="text-gray-600 mb-6">
         Please connect your Metamask wallet to sign up for TrustDate.<br />
-        We use secure blockchain authentication to protect your identity.
+        We securely protect your identity through blockchain authentication.
       </p>
       
       <button 
@@ -484,7 +607,19 @@ export default function Register() {
         </div>
       )}
       
-      <div className="divider">OR</div>
+      <div className="text-sm text-gray-600 mt-4">
+        <p>Don't have MetaMask installed?</p>
+        <a 
+          href="https://metamask.io/download/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-primary hover:underline"
+        >
+          Install MetaMask
+        </a>
+      </div>
+      
+      <div className="divider">Or</div>
       
       <div>
         <p className="mb-4 text-gray-600">Already have an account?</p>

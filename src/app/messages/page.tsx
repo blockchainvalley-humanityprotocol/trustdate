@@ -207,13 +207,6 @@ const MessagesPage = () => {
   const [loading, setLoading] = useState(false);
   const [floatingHearts, setFloatingHearts] = useState<Array<{id: number, x: number, y: number, delay: number}>>([]);
 
-  useEffect(() => {
-    // 실제 구현에서는 API를 호출하여 대화 데이터를 가져옴
-    if (currentUser.conversations.length > 0) {
-      setSelectedConversation(currentUser.conversations[0]);
-    }
-  }, []);
-
   const handleSendMessage = (content: string) => {
     if (!selectedConversation) return;
 
@@ -232,7 +225,7 @@ const MessagesPage = () => {
       read: false
     };
 
-    // 하트 이펙트 추가
+    // Add heart effect
     const createHeartEffect = () => {
       const newHearts = Array.from({ length: 5 }).map((_, index) => ({
         id: Date.now() + index,
@@ -245,7 +238,7 @@ const MessagesPage = () => {
     
     createHeartEffect();
 
-    // 실제 구현에서는 API를 통해 메시지를 보냄
+    // In a real implementation, messages would be sent through an API
     setConversations(prev => ({
       ...prev,
       [selectedConversation]: {
@@ -350,7 +343,7 @@ const MessagesPage = () => {
           {selectedConversation ? (
             <>
               <div className="love-card overflow-hidden relative">
-                {/* 플로팅 하트 애니메이션 */}
+                {/* Floating hearts animation */}
                 <AnimatePresence>
                   {floatingHearts.map((heart) => (
                     <motion.div

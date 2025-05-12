@@ -32,6 +32,7 @@ export interface UserProfile {
   displayName: string;
   bio: string;
   avatarUrl: string;
+  profileImage?: string; // 프로필 이미지 URL (회원가입 시 업로드한 이미지)
   location: string;
   interests: string[];
   credentials: VerifiableCredential[];
@@ -99,4 +100,9 @@ export interface HeartRateData {
   baselineRate: number; // Baseline heart rate
   viewingRate: number;  // Heart rate while viewing profile
   percentageChange: number;
+}
+
+// Add window ethereum type declaration
+interface Window {
+  ethereum?: any;
 } 

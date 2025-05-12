@@ -31,11 +31,28 @@ export default function Login() {
     setError('');
 
     try {
+      if (typeof window === 'undefined' || !window.ethereum) {
+        throw new Error('메타마스크가 설치되어 있지 않습니다. 메타마스크를 설치해주세요.');
+      }
+      
+      // 메타마스크가 잠겨있는지 확인
+      try {
+        const accounts = await window.ethereum.request({ 
+          method: 'eth_accounts'
+        });
+        
+        if (accounts.length === 0) {
+          console.log('메타마스크가 잠겨있거나 계정이 선택되지 않았습니다.');
+        }
+      } catch (acctError) {
+        console.error('계정 확인 중 오류 발생:', acctError);
+      }
+      
       // Connect to MetaMask
       const connectResult = await metamaskAuth.connectWallet();
       
       if (!connectResult.success) {
-        throw new Error(connectResult.error || 'Failed to connect MetaMask');
+        throw new Error(connectResult.error || '메타마스크 연결에 실패했습니다.');
       }
 
       const { address } = connectResult;
@@ -48,7 +65,7 @@ export default function Login() {
       const signResult = await metamaskAuth.signMessage(message);
       
       if (!signResult.success) {
-        throw new Error(signResult.error || 'Failed to sign message');
+        throw new Error(signResult.error || '메시지 서명에 실패했습니다.');
       }
 
       // Set authenticated state on successful signature
@@ -64,7 +81,8 @@ export default function Login() {
         router.push('/profile');
       }, 1000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unknown error occurred.');
+      console.error('메타마스크 로그인 오류:', err);
+      setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
     } finally {
       setLoading(false);
     }
@@ -115,11 +133,13 @@ export default function Login() {
                   alt="Metamask Logo" 
                   className="w-16 h-16 mx-auto mb-4"
                   onError={(e) => {
-                    e.currentTarget.src = 'https://raw.githubusercontent.com/MetaMask/brand-resources/master/SVG/metamask-fox.svg';
+                    console.error("Error loading MetaMask logo:", e);
+                    e.currentTarget.onerror = null; // Prevent infinite loop
+                    e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg";
                   }}
                 />
                 <p className="text-gray-700 mb-4">
-                  Connect your MetaMask wallet for an easy login. Secure your identity with blockchain authentication.
+                  MetaMask 지갑을 연결하여 쉽게 로그인하세요. 블록체인 인증으로 안전하게 신원을 보호합니다.
                 </p>
                 <button 
                   onClick={handleMetamaskLogin} 
@@ -129,22 +149,34 @@ export default function Login() {
                   {loading ? (
                     <>
                       <span className="loading loading-spinner loading-sm mr-2"></span>
-                      Connecting...
+                      연결 중...
                     </>
                   ) : (
-                    'Login with MetaMask'
+                    'MetaMask로 로그인'
                   )}
                 </button>
                 {error && (
                   <div className="text-error mt-2 text-sm">{error}</div>
                 )}
+                
+                <div className="text-sm text-gray-600 mt-4">
+                  <p>MetaMask가 설치되어 있지 않으신가요?</p>
+                  <a 
+                    href="https://metamask.io/download/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    MetaMask 설치하기
+                  </a>
+                </div>
               </div>
 
-              <div className="divider">OR</div>
+              <div className="divider">또는</div>
 
               <div className="text-center">
-                <p className="mb-4 text-gray-600">New to TrustDate?</p>
-                <Link href="/register" className="btn btn-outline btn-block">Register</Link>
+                <p className="mb-4 text-gray-600">TrustDate가 처음이신가요?</p>
+                <Link href="/register" className="btn btn-outline btn-block">회원가입</Link>
               </div>
             </div>
           )}

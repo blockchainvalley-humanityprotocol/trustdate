@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { UserProfile, VerifiableCredential } from '@/types';
 import CredentialManager from '@/components/CredentialManager';
@@ -116,6 +116,38 @@ const ProfilePage = () => {
   const [apiTestResult, setApiTestResult] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  // 페이지 로드 시 로컬 스토리지에서 사용자 데이터 불러오기
+  useEffect(() => {
+    const loadUserData = () => {
+      try {
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+          const parsedData = JSON.parse(userData);
+          
+          // 더미 프로필의 자격 증명 정보를 유지하면서 사용자 데이터 병합
+          const mergedProfile = {
+            ...parsedData,
+            credentials: dummyProfile.credentials // 항상 더미 자격증명 데이터 사용
+          };
+          
+          setProfile(mergedProfile);
+          
+          // 폼 데이터도 업데이트
+          setFormData({
+            displayName: parsedData.displayName || '',
+            bio: parsedData.bio || '',
+            location: parsedData.location || '',
+            interests: (parsedData.interests || []).join(', ')
+          });
+        }
+      } catch (error) {
+        console.error('로컬 스토리지에서 데이터를 불러오는 중 오류 발생:', error);
+      }
+    };
+
+    loadUserData();
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -125,14 +157,21 @@ const ProfilePage = () => {
   };
 
   const handleSave = () => {
-    // 실제 구현에서는 API 호출을 통해 저장
-    setProfile(prev => ({
-      ...prev,
+    // 프로필 업데이트
+    const updatedProfile = {
+      ...profile,
       displayName: formData.displayName,
       bio: formData.bio,
       location: formData.location,
-      interests: formData.interests.split(',').map(item => item.trim())
-    }));
+      interests: formData.interests.split(',').map(item => item.trim()),
+      lastActive: new Date().toISOString()
+    };
+    
+    // 로컬 스토리지 업데이트
+    localStorage.setItem('userData', JSON.stringify(updatedProfile));
+    
+    // 상태 업데이트
+    setProfile(updatedProfile);
     setEditMode(false);
   };
 
@@ -193,173 +232,147 @@ const ProfilePage = () => {
   return (
     <main className="min-h-screen py-12 bg-gray-50">
       {/* Header */}
-      <header className="w-full bg-white shadow-sm fixed top-0 z-10">
+      <header className="w-full bg-white shadow-sm">
         <div className="container mx-auto flex justify-between items-center p-4">
           <Link href="/" className="text-2xl font-bold text-primary">TrustDate</Link>
-          <nav className="flex gap-6">
-            <Link href="/discover" className="hover:text-primary">Discover</Link>
-            <Link href="/matches" className="hover:text-primary">Matches</Link>
-            <Link href="/messages" className="hover:text-primary">Messages</Link>
-            <Link href="/profile" className="text-primary">Profile</Link>
+          <nav className="flex gap-4">
+            <Link href="/discover" className="btn btn-sm btn-secondary">Discover</Link>
+            <Link href="/matches" className="btn btn-sm btn-outline">Matches</Link>
+            <Link href="/profile" className="btn btn-sm btn-primary">Profile</Link>
           </nav>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 mt-20">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">My Profile</h1>
-            <div className="flex gap-2">
-              <button 
-                onClick={testApiConnection}
-                className="btn btn-secondary btn-sm"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Testing...' : 'Test API Key'}
-              </button>
-              {!editMode ? (
+      <div className="container mx-auto px-4 mt-12">
+        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Profile Image */}
+            <div className="md:w-1/3 flex flex-col items-center">
+              <div className="avatar">
+                <div className="w-40 h-40 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                  <img 
+                    src={profile.profileImage || profile.avatarUrl || '/images/default.jpg'} 
+                    alt={profile.displayName} 
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+              </div>
+              
+              <h2 className="text-2xl font-bold text-center mt-4">{profile.displayName}</h2>
+              <p className="text-gray-500 text-center">{profile.location}</p>
+              
+              <div className="w-full mt-6">
                 <button 
-                  onClick={() => setEditMode(true)}
-                  className="btn btn-outline btn-sm"
+                  onClick={() => setEditMode(!editMode)} 
+                  className="btn btn-primary btn-block mb-2"
                 >
-                  Edit Profile
+                  {editMode ? 'Cancel Edit' : 'Edit Profile'}
                 </button>
+                
+                {/* Logout button */}
+                <button className="btn btn-outline btn-block">
+                  Logout
+                </button>
+              </div>
+            </div>
+            
+            {/* Profile Information */}
+            <div className="md:w-2/3">
+              {editMode ? (
+                // Edit form
+                <div className="space-y-6">
+                  <h3 className="text-xl font-semibold">Edit Profile</h3>
+                  
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Display Name</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      name="displayName" 
+                      value={formData.displayName} 
+                      onChange={handleInputChange} 
+                      className="input input-bordered" 
+                    />
+                  </div>
+                  
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Bio</span>
+                    </label>
+                    <textarea 
+                      name="bio" 
+                      value={formData.bio} 
+                      onChange={handleInputChange} 
+                      className="textarea textarea-bordered h-24" 
+                    ></textarea>
+                  </div>
+                  
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Location</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      name="location" 
+                      value={formData.location} 
+                      onChange={handleInputChange} 
+                      className="input input-bordered" 
+                    />
+                  </div>
+                  
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Interests (comma separated)</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      name="interests" 
+                      value={formData.interests} 
+                      onChange={handleInputChange} 
+                      className="input input-bordered" 
+                    />
+                  </div>
+                  
+                  <div className="form-control mt-6">
+                    <button 
+                      onClick={handleSave} 
+                      className="btn btn-primary"
+                    >
+                      Save Profile
+                    </button>
+                  </div>
+                </div>
               ) : (
-                <div className="flex gap-2">
-                  <button 
-                    onClick={() => setEditMode(false)}
-                    className="btn btn-outline btn-sm"
-                  >
-                    Cancel
-                  </button>
-                  <button 
-                    onClick={handleSave}
-                    className="btn btn-primary btn-sm"
-                  >
-                    Save
-                  </button>
+                <div className="flex flex-col md:flex-row gap-8">
+                  <div className="flex-grow">
+                    <h2 className="text-2xl font-bold mb-2">{profile.displayName}</h2>
+                    <p className="text-gray-500 mb-4">{profile.location}</p>
+                    <h3 className="font-semibold mt-4 mb-2">Bio</h3>
+                    <p className="text-gray-700 mb-4">{profile.bio}</p>
+                    <h3 className="font-semibold mt-4 mb-2">Interests</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {profile.interests.map((interest, index) => (
+                        <span 
+                          key={index} 
+                          className="badge badge-secondary badge-outline p-3"
+                        >
+                          {interest}
+                        </span>
+                      ))}
+                    </div>
+                    {profile.walletAddress && (
+                      <div className="mt-4">
+                        <h3 className="font-semibold mt-4 mb-2">Wallet Address</h3>
+                        <p className="text-xs text-gray-700 font-mono break-all bg-gray-100 p-2 rounded">
+                          {profile.walletAddress}
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
-          </div>
-          
-          {apiTestResult && (
-            <div className={`p-4 mb-6 rounded-lg ${apiTestResult.includes('successful') ? 'bg-green-100' : 'bg-red-100'}`}>
-              {apiTestResult}
-            </div>
-          )}
-
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            {!editMode ? (
-              <div className="flex flex-col md:flex-row gap-8">
-                <div className="flex-shrink-0">
-                  <div className="avatar">
-                    <div className="w-40 h-40 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                      <img 
-                        src={profile.avatarUrl || 'https://via.placeholder.com/200?text=profile'} 
-                        alt={profile.displayName} 
-                        onError={(e) => {
-                          e.currentTarget.src = 'https://via.placeholder.com/200?text=profile';
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex-grow">
-                  <h2 className="text-2xl font-bold mb-2">{profile.displayName}</h2>
-                  <p className="text-gray-500 mb-4">{profile.location}</p>
-                  <h3 className="font-semibold mt-4 mb-2">Bio</h3>
-                  <p className="text-gray-700 mb-4">{profile.bio}</p>
-                  <h3 className="font-semibold mt-4 mb-2">Interests</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {profile.interests.map((interest, index) => (
-                      <span 
-                        key={index} 
-                        className="badge badge-secondary badge-outline p-3"
-                      >
-                        {interest}
-                      </span>
-                    ))}
-                  </div>
-                  {profile.walletAddress && (
-                    <div className="mt-4">
-                      <h3 className="font-semibold mt-4 mb-2">Wallet Address</h3>
-                      <p className="text-xs text-gray-700 font-mono break-all bg-gray-100 p-2 rounded">
-                        {profile.walletAddress}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-col md:flex-row gap-8">
-                <div className="flex-shrink-0">
-                  <div className="avatar">
-                    <div className="w-40 h-40 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                      <img 
-                        src={profile.avatarUrl || 'https://via.placeholder.com/200?text=profile'} 
-                        alt={profile.displayName} 
-                        onError={(e) => {
-                          e.currentTarget.src = 'https://via.placeholder.com/200?text=profile';
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <button className="btn btn-outline btn-sm w-full mt-4">
-                    Change Image
-                  </button>
-                </div>
-                <div className="flex-grow">
-                  <div className="form-control w-full mb-4">
-                    <label className="label">
-                      <span className="label-text font-semibold">Name</span>
-                    </label>
-                    <input 
-                      type="text" 
-                      name="displayName"
-                      value={formData.displayName}
-                      onChange={handleInputChange}
-                      className="input input-bordered w-full" 
-                    />
-                  </div>
-                  <div className="form-control w-full mb-4">
-                    <label className="label">
-                      <span className="label-text font-semibold">Location</span>
-                    </label>
-                    <input 
-                      type="text" 
-                      name="location"
-                      value={formData.location}
-                      onChange={handleInputChange}
-                      className="input input-bordered w-full" 
-                    />
-                  </div>
-                  <div className="form-control w-full mb-4">
-                    <label className="label">
-                      <span className="label-text font-semibold">Bio</span>
-                    </label>
-                    <textarea 
-                      name="bio"
-                      value={formData.bio}
-                      onChange={handleInputChange}
-                      className="textarea textarea-bordered w-full h-32" 
-                    />
-                  </div>
-                  <div className="form-control w-full mb-4">
-                    <label className="label">
-                      <span className="label-text font-semibold">Interests (comma separated)</span>
-                    </label>
-                    <input 
-                      type="text" 
-                      name="interests"
-                      value={formData.interests}
-                      onChange={handleInputChange}
-                      className="input input-bordered w-full" 
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Credential Manager component */}
