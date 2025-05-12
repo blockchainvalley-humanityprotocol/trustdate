@@ -131,6 +131,17 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
     }
   };
 
+  // Return positive message based on heart rate change
+  const getInterestMessage = () => {
+    if (matchPossible) {
+      return "You're feeling excitement for this profile! Matching is possible.";
+    } else if (percentageChange && percentageChange > 0) {
+      return "There's a spark of interest! Keep exploring their profile.";
+    } else {
+      return "Take your time to explore more and see if interest grows.";
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md p-4 my-4">
       <h3 className="text-lg font-semibold mb-2">💓 Heart Rate Matching</h3>
@@ -151,8 +162,8 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
           <div className="flex items-center justify-center">
             <div className="text-center">
               <p className="text-sm text-gray-500">Heart Rate Change</p>
-              <p className={`text-2xl font-bold ${percentageChange && percentageChange >= 15 ? 'text-red-500' : 'text-gray-700'}`}>
-                {percentageChange?.toFixed(1)}%
+              <p className={`text-2xl font-bold ${percentageChange && percentageChange >= 5 ? 'text-red-500' : percentageChange && percentageChange < 0 ? 'text-blue-500' : 'text-gray-700'}`}>
+                {percentageChange && percentageChange > 0 ? '+' : ''}{percentageChange?.toFixed(1)}%
               </p>
             </div>
           </div>
@@ -167,10 +178,9 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
           
           <div className="text-center">
             <p className="font-medium">
-              {matchPossible 
-                ? <span className="text-green-600">You're feeling excitement for this profile! Matching is possible.</span> 
-                : <span className="text-gray-600">You're not feeling enough excitement yet.</span>
-              }
+              <span className={matchPossible ? 'text-green-600' : percentageChange && percentageChange > 0 ? 'text-yellow-600' : 'text-gray-600'}>
+                {getInterestMessage()}
+              </span>
             </p>
           </div>
           

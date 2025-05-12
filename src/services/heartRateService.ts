@@ -4,10 +4,16 @@ import { HeartRateData } from '@/types';
 
 // User camera-based heart rate measurement (PPG technique)
 
+// Helper function to simulate delay
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 // Measure baseline heart rate (30 seconds)
 export const heartRateService = {
   measureBaselineHeartRate: async (): Promise<number> => {
     try {
+      // Simulate 3 second delay for measurement
+      await delay(3000);
+      
       // Actual implementation: Detect user's face with camera and measure heart rate using PPG technique
       // Simulation: Return random baseline heart rate between 65-80 BPM
       const baselineRate = Math.floor(Math.random() * 16) + 65;
@@ -22,31 +28,52 @@ export const heartRateService = {
   // Measure heart rate while viewing profile (15 seconds)
   measureHeartRateWhileViewingProfile: async (targetUserId: string): Promise<number> => {
     try {
+      // Simulate 2 second delay for measurement
+      await delay(2000);
+      
       // Actual implementation: Measure user's heart rate while viewing profile
       // Simulation: Increase heart rate based on profile attractiveness
       
-      // Simulate random increases by target user ID
-      let increasePercentage = 0;
+      // Determine if heart rate will increase (75% chance) or decrease (25% chance)
+      const willIncrease = Math.random() < 0.75;
       
-      // Use the last character of the ID to determine random range for simulation
-      const lastChar = targetUserId[targetUserId.length - 1];
-      const lastDigit = parseInt(lastChar, 16) || 5;
+      // Get baseline rate between 65-80 BPM for calculation
+      const baselineRate = Math.floor(Math.random() * 16) + 65;
       
-      if (lastDigit >= 8) {
-        // High attractiveness: 15-40% increase
-        increasePercentage = 15 + Math.random() * 25;
-      } else if (lastDigit >= 5) {
-        // Medium attractiveness: 5-20% increase
-        increasePercentage = 5 + Math.random() * 15;
+      if (willIncrease) {
+        // Heart rate increases - more common case (75% probability)
+        // Simulate random increases by target user ID
+        let increasePercentage = 0;
+        
+        // Use the last character of the ID to determine random range for simulation
+        const lastChar = targetUserId[targetUserId.length - 1];
+        const lastDigit = parseInt(lastChar, 16) || 5;
+        
+        if (lastDigit >= 8) {
+          // High attractiveness: 15-40% increase
+          increasePercentage = 15 + Math.random() * 25;
+        } else if (lastDigit >= 5) {
+          // Medium attractiveness: 5-20% increase
+          increasePercentage = 5 + Math.random() * 15;
+        } else {
+          // Low attractiveness: 1-10% increase
+          increasePercentage = 1 + Math.random() * 9;
+        }
+        
+        // Apply increase to baseline heart rate
+        const increasedRate = Math.floor(baselineRate * (1 + increasePercentage / 100));
+        console.log(`Heart rate while viewing profile: ${increasedRate} (${increasePercentage.toFixed(1)}% increase)`);
+        return increasedRate;
       } else {
-        // Low attractiveness: 1-10% increase
-        increasePercentage = 1 + Math.random() * 9;
+        // Heart rate decreases - less common case (25% probability)
+        // Simulate random decrease (1-8%)
+        const decreasePercentage = 1 + Math.random() * 7;
+        
+        // Apply decrease to baseline heart rate
+        const decreasedRate = Math.floor(baselineRate * (1 - decreasePercentage / 100));
+        console.log(`Heart rate while viewing profile: ${decreasedRate} (${decreasePercentage.toFixed(1)}% decrease)`);
+        return decreasedRate;
       }
-      
-      // Apply increase to baseline heart rate of 70
-      const increasedRate = Math.floor(70 * (1 + increasePercentage / 100));
-      console.log(`Heart rate while viewing profile: ${increasedRate} (${increasePercentage.toFixed(1)}% increase)`);
-      return increasedRate;
     } catch (error) {
       console.error('Error measuring heart rate while viewing profile:', error);
       throw error;
