@@ -5,15 +5,16 @@ import Link from 'next/link';
 import { UserProfile, VerifiableCredential } from '@/types';
 import CredentialManager from '@/components/CredentialManager';
 import CredentialCard from '@/components/CredentialCard';
+import { humanityApi } from '@/services/humanityApi';
 
-// 더미 사용자 데이터
+// Dummy user data
 const dummyProfile: UserProfile = {
   id: 'user123',
-  displayName: '김태희',
-  bio: '블록체인과 AI 기술에 관심이 많은 개발자입니다. 새로운 기술과 혁신적인 아이디어에 흥미가 있습니다.',
+  displayName: 'Kim Taehee',
+  bio: 'Developer interested in blockchain and AI technology. Fascinated by new technologies and innovative ideas.',
   avatarUrl: '/images/default.jpg',
-  location: '서울시 강남구',
-  interests: ['블록체인', '인공지능', '프로그래밍', '혁신기술', '창업'],
+  location: 'Gangnam, Seoul',
+  interests: ['Blockchain', 'Artificial Intelligence', 'Programming', 'Innovative Tech', 'Startups'],
   credentials: [
     {
       '@context': ['https://www.w3.org/ns/credentials/v2'],
@@ -76,8 +77,8 @@ const dummyProfile: UserProfile = {
       validUntil: '',
       credentialSubject: {
         id: 'did:ethr:0xSample123456789abcdef0123456789abcdef01234567',
-        institution: '서울대학교',
-        degree: '컴퓨터공학과'
+        institution: 'Seoul National University',
+        degree: 'Computer Science'
       },
       id: 'urn:uuid:sample-uuid-12340987-6543-210f-edcb-a0987654321fe',
       credentialStatus: {
@@ -112,6 +113,8 @@ const ProfilePage = () => {
     location: profile.location,
     interests: profile.interests.join(', ')
   });
+  const [apiTestResult, setApiTestResult] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -155,17 +158,49 @@ const ProfilePage = () => {
     }));
   };
 
+  const testApiConnection = async () => {
+    try {
+      setIsLoading(true);
+      setApiTestResult('Testing API connection...');
+      
+      console.log('API test started');
+      const response = await humanityApi.listCredentials();
+      console.log('API response:', response);
+      
+      if (response.success && response.data) {
+        setApiTestResult(`API connection successful! Credentials found: ${response.data.length}`);
+      } else {
+        let errorMessage = '';
+        if (typeof response.error === 'object') {
+          errorMessage = JSON.stringify(response.error);
+        } else if (response.error) {
+          errorMessage = response.error;
+        } else {
+          errorMessage = 'Unknown error';
+        }
+        
+        // 직접 API 테스트 결과 추가
+        setApiTestResult(`API connection failed: ${errorMessage}. The API key is valid but an error occurred on the API server. Check server logs.`);
+      }
+    } catch (error: any) {
+      console.error('API test exception:', error);
+      setApiTestResult(`Exception during API connection: ${error.message}. The API key is valid but there's a server-side issue.`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <main className="min-h-screen py-12 bg-gray-50">
-      {/* 헤더 */}
+      {/* Header */}
       <header className="w-full bg-white shadow-sm fixed top-0 z-10">
         <div className="container mx-auto flex justify-between items-center p-4">
           <Link href="/" className="text-2xl font-bold text-primary">TrustDate</Link>
           <nav className="flex gap-6">
-            <Link href="/discover" className="hover:text-primary">탐색</Link>
-            <Link href="/matches" className="hover:text-primary">매치</Link>
-            <Link href="/messages" className="hover:text-primary">메시지</Link>
-            <Link href="/profile" className="text-primary">프로필</Link>
+            <Link href="/discover" className="hover:text-primary">Discover</Link>
+            <Link href="/matches" className="hover:text-primary">Matches</Link>
+            <Link href="/messages" className="hover:text-primary">Messages</Link>
+            <Link href="/profile" className="text-primary">Profile</Link>
           </nav>
         </div>
       </header>
@@ -173,31 +208,46 @@ const ProfilePage = () => {
       <div className="container mx-auto px-4 mt-20">
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">내 프로필</h1>
-            {!editMode ? (
+            <h1 className="text-3xl font-bold">My Profile</h1>
+            <div className="flex gap-2">
               <button 
-                onClick={() => setEditMode(true)}
-                className="btn btn-outline btn-sm"
+                onClick={testApiConnection}
+                className="btn btn-secondary btn-sm"
+                disabled={isLoading}
               >
-                프로필 수정
+                {isLoading ? 'Testing...' : 'Test API Key'}
               </button>
-            ) : (
-              <div className="flex gap-2">
+              {!editMode ? (
                 <button 
-                  onClick={() => setEditMode(false)}
+                  onClick={() => setEditMode(true)}
                   className="btn btn-outline btn-sm"
                 >
-                  취소
+                  Edit Profile
                 </button>
-                <button 
-                  onClick={handleSave}
-                  className="btn btn-primary btn-sm"
-                >
-                  저장
-                </button>
-              </div>
-            )}
+              ) : (
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => setEditMode(false)}
+                    className="btn btn-outline btn-sm"
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    onClick={handleSave}
+                    className="btn btn-primary btn-sm"
+                  >
+                    Save
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
+          
+          {apiTestResult && (
+            <div className={`p-4 mb-6 rounded-lg ${apiTestResult.includes('successful') ? 'bg-green-100' : 'bg-red-100'}`}>
+              {apiTestResult}
+            </div>
+          )}
 
           <div className="bg-white rounded-lg shadow-md p-6 mb-8">
             {!editMode ? (
@@ -218,9 +268,9 @@ const ProfilePage = () => {
                 <div className="flex-grow">
                   <h2 className="text-2xl font-bold mb-2">{profile.displayName}</h2>
                   <p className="text-gray-500 mb-4">{profile.location}</p>
-                  <h3 className="font-semibold mt-4 mb-2">자기소개</h3>
+                  <h3 className="font-semibold mt-4 mb-2">Bio</h3>
                   <p className="text-gray-700 mb-4">{profile.bio}</p>
-                  <h3 className="font-semibold mt-4 mb-2">관심사</h3>
+                  <h3 className="font-semibold mt-4 mb-2">Interests</h3>
                   <div className="flex flex-wrap gap-2">
                     {profile.interests.map((interest, index) => (
                       <span 
@@ -233,7 +283,7 @@ const ProfilePage = () => {
                   </div>
                   {profile.walletAddress && (
                     <div className="mt-4">
-                      <h3 className="font-semibold mt-4 mb-2">지갑 주소</h3>
+                      <h3 className="font-semibold mt-4 mb-2">Wallet Address</h3>
                       <p className="text-xs text-gray-700 font-mono break-all bg-gray-100 p-2 rounded">
                         {profile.walletAddress}
                       </p>
@@ -256,13 +306,13 @@ const ProfilePage = () => {
                     </div>
                   </div>
                   <button className="btn btn-outline btn-sm w-full mt-4">
-                    이미지 변경
+                    Change Image
                   </button>
                 </div>
                 <div className="flex-grow">
                   <div className="form-control w-full mb-4">
                     <label className="label">
-                      <span className="label-text font-semibold">이름</span>
+                      <span className="label-text font-semibold">Name</span>
                     </label>
                     <input 
                       type="text" 
@@ -274,7 +324,7 @@ const ProfilePage = () => {
                   </div>
                   <div className="form-control w-full mb-4">
                     <label className="label">
-                      <span className="label-text font-semibold">위치</span>
+                      <span className="label-text font-semibold">Location</span>
                     </label>
                     <input 
                       type="text" 
@@ -286,7 +336,7 @@ const ProfilePage = () => {
                   </div>
                   <div className="form-control w-full mb-4">
                     <label className="label">
-                      <span className="label-text font-semibold">자기소개</span>
+                      <span className="label-text font-semibold">Bio</span>
                     </label>
                     <textarea 
                       name="bio"
@@ -297,7 +347,7 @@ const ProfilePage = () => {
                   </div>
                   <div className="form-control w-full mb-4">
                     <label className="label">
-                      <span className="label-text font-semibold">관심사 (쉼표로 구분)</span>
+                      <span className="label-text font-semibold">Interests (comma separated)</span>
                     </label>
                     <input 
                       type="text" 
@@ -312,10 +362,10 @@ const ProfilePage = () => {
             )}
           </div>
 
-          {/* CredentialManager 컴포넌트로 교체 */}
-          <h2 className="text-2xl font-bold mb-4">인증 정보 (Verifiable Credentials)</h2>
+          {/* Credential Manager component */}
+          <h2 className="text-2xl font-bold mb-4">Verifiable Credentials</h2>
           
-          {/* 프로필 페이지에서 간략하게 VC 카드 표시 */}
+          {/* Display VC cards briefly on profile page */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {profile.credentials.map(credential => (
               <CredentialCard 
@@ -340,7 +390,7 @@ const ProfilePage = () => {
               href="/discover" 
               className="btn btn-primary btn-lg"
             >
-              매칭 시작하기
+              Start Matching
             </Link>
           </div>
         </div>

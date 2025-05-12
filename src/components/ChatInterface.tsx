@@ -29,7 +29,7 @@ const ChatInterface = ({
   const chatPartner = partner || partnerProfile;
   
   if (!chatPartner) {
-    return <div className="p-6 text-center">대화 상대를 찾을 수 없습니다.</div>;
+    return <div className="p-6 text-center">Could not find conversation partner.</div>;
   }
 
   // 메시지 목록 자동 스크롤
@@ -60,7 +60,7 @@ const ChatInterface = ({
     const groups: { [key: string]: Message[] } = {};
     
     conversation.messages.forEach(msg => {
-      const date = new Date(msg.createdAt).toLocaleDateString('ko-KR');
+      const date = new Date(msg.createdAt).toLocaleDateString('en-US');
       if (!groups[date]) {
         groups[date] = [];
       }
@@ -96,13 +96,13 @@ const ChatInterface = ({
           </h3>
           <p className="text-xs text-gray-500">
             {chatPartner.lastActive ? 
-              `마지막 접속: ${new Date(chatPartner.lastActive).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}` : 
-              '오프라인'}
+              `Last seen: ${new Date(chatPartner.lastActive).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}` : 
+              'Offline'}
           </p>
         </div>
         <div className="flex gap-1">
           <HeartIcon size={20} color="#ff9ebb" />
-          <span className="text-sm text-love-pink font-medium">매칭됨</span>
+          <span className="text-sm text-love-pink font-medium">Matched</span>
         </div>
       </div>
       
@@ -150,9 +150,9 @@ const ChatInterface = ({
                       {msg.content}
                     </motion.div>
                     <div className={`text-xs text-gray-500 mt-1 ${msg.senderId === currentUser.id ? 'text-right' : 'text-left'}`}>
-                      {new Date(msg.createdAt).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}
+                      {new Date(msg.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                       {msg.senderId === currentUser.id && msg.read && (
-                        <span className="ml-1 text-love-accent">읽음</span>
+                        <span className="ml-1 text-love-accent">Read</span>
                       )}
                     </div>
                   </div>
@@ -179,7 +179,7 @@ const ChatInterface = ({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyPress}
-            placeholder="메시지를 입력하세요..."
+            placeholder="Type your message..."
             rows={2}
           />
           <motion.button 

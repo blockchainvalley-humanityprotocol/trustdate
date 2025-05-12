@@ -27,7 +27,7 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // 기존 측정 데이터가 있는지 확인
+  // Check if existing measurement data exists
   useEffect(() => {
     const existingData = heartRateService.getHeartRateDataForUserPair(userId, targetUserId);
     if (existingData) {
@@ -41,40 +41,40 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
       );
       setInterestLevel(interestResult.interestLevel);
       
-      const threshold = 15; // 예시 threshold 값
+      const threshold = 15; // Example threshold value
       setMatchPossible(heartRateService.isMatchPossible(existingData.percentageChange, threshold));
       
       setStatus(MeasurementStatus.COMPLETED);
     }
   }, [userId, targetUserId]);
 
-  // 심장 박동수 측정 시작
+  // Start heart rate measurement
   const startMeasurement = async () => {
     try {
       setIsLoading(true);
       setError(null);
       setStatus(MeasurementStatus.MEASURING_BASELINE);
       
-      // 1. 기본 심장 박동수 측정
+      // 1. Measure baseline heart rate
       const baseline = await heartRateService.measureBaselineHeartRate();
       setBaselineRate(baseline);
       
-      // 2. 프로필 보는 중 심장 박동수 측정
+      // 2. Measure heart rate while viewing profile
       setStatus(MeasurementStatus.MEASURING_VIEWING);
       const viewing = await heartRateService.measureHeartRateWhileViewingProfile(targetUserId);
       setViewingRate(viewing);
       
-      // 3. 관심도 계산
+      // 3. Calculate interest level
       const result = heartRateService.calculateInterestLevel(baseline, viewing);
       setPercentageChange(result.percentageChange);
       setInterestLevel(result.interestLevel);
       
-      // 4. 매칭 가능 여부 확인
-      const threshold = 15; // 예시 threshold 값
+      // 4. Check if matching is possible
+      const threshold = 15; // Example threshold value
       const canMatch = heartRateService.isMatchPossible(result.percentageChange, threshold);
       setMatchPossible(canMatch);
       
-      // 5. 결과 저장
+      // 5. Save results
       const measurementData: HeartRateData = {
         userId,
         targetUserId,
@@ -86,36 +86,36 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
       
       heartRateService.saveHeartRateData(measurementData);
       
-      // 6. 콜백 호출
+      // 6. Call callback
       if (onMeasurementComplete) {
         onMeasurementComplete(measurementData);
       }
       
       setStatus(MeasurementStatus.COMPLETED);
     } catch (error) {
-      console.error('심장 박동수 측정 중 오류:', error);
-      setError('측정 중 오류가 발생했습니다. 다시 시도해주세요.');
+      console.error('Error while measuring heart rate:', error);
+      setError('An error occurred during measurement. Please try again.');
       setStatus(MeasurementStatus.IDLE);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // 측정 상태에 따른 메시지 반환
+  // Return message based on measurement status
   const getStatusMessage = () => {
     switch (status) {
       case MeasurementStatus.MEASURING_BASELINE:
-        return '기본 심장 박동수 측정 중... 편안하게 있어주세요. (3초)';
+        return 'Measuring baseline heart rate... Please relax. (3 sec)';
       case MeasurementStatus.MEASURING_VIEWING:
-        return '프로필을 보면서 느끼는 심장 박동수 측정 중... (2초)';
+        return 'Measuring heart rate while viewing profile... (2 sec)';
       case MeasurementStatus.COMPLETED:
-        return '측정 완료!';
+        return 'Measurement complete!';
       default:
-        return '프로필을 보면서 심장 박동수를 측정해보세요.';
+        return 'Measure your heart rate while viewing this profile.';
     }
   };
 
-  // 관심도에 따른 색상 반환
+  // Return color based on interest level
   const getInterestColor = () => {
     if (!interestLevel) return 'bg-gray-200';
     
@@ -133,24 +133,24 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4 my-4">
-      <h3 className="text-lg font-semibold mb-2">💓 심장 박동수 매칭</h3>
+      <h3 className="text-lg font-semibold mb-2">💓 Heart Rate Matching</h3>
       
       {status === MeasurementStatus.COMPLETED ? (
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center">
-              <p className="text-sm text-gray-500">기본 심장 박동수</p>
+              <p className="text-sm text-gray-500">Baseline Heart Rate</p>
               <p className="text-2xl font-bold">{baselineRate} <span className="text-sm">BPM</span></p>
             </div>
             <div className="text-center">
-              <p className="text-sm text-gray-500">프로필 열람 시</p>
+              <p className="text-sm text-gray-500">While Viewing Profile</p>
               <p className="text-2xl font-bold">{viewingRate} <span className="text-sm">BPM</span></p>
             </div>
           </div>
           
           <div className="flex items-center justify-center">
             <div className="text-center">
-              <p className="text-sm text-gray-500">심장 박동 변화</p>
+              <p className="text-sm text-gray-500">Heart Rate Change</p>
               <p className={`text-2xl font-bold ${percentageChange && percentageChange >= 15 ? 'text-red-500' : 'text-gray-700'}`}>
                 {percentageChange?.toFixed(1)}%
               </p>
@@ -168,8 +168,8 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
           <div className="text-center">
             <p className="font-medium">
               {matchPossible 
-                ? <span className="text-green-600">이 프로필에 설렘을 느끼고 있네요! 매칭 가능합니다.</span> 
-                : <span className="text-gray-600">아직 충분한 설렘을 느끼지 못했습니다.</span>
+                ? <span className="text-green-600">You're feeling excitement for this profile! Matching is possible.</span> 
+                : <span className="text-gray-600">You're not feeling enough excitement yet.</span>
               }
             </p>
           </div>
@@ -179,7 +179,7 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
             disabled={isLoading}
             className="btn btn-outline btn-sm w-full mt-2"
           >
-            다시 측정하기
+            Measure Again
           </button>
         </div>
       ) : (
@@ -203,9 +203,9 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
               {isLoading ? (
                 <>
                   <span className="loading loading-spinner loading-sm mr-2"></span>
-                  측정 중...
+                  Measuring...
                 </>
-              ) : '심장 박동수 측정하기'}
+              ) : 'Measure Heart Rate'}
             </button>
           )}
           

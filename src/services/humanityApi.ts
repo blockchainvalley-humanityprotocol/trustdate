@@ -1,33 +1,31 @@
 import axios from 'axios';
 import { VerifiableCredential, ApiResponse } from '@/types';
 
-// 실제 API URL
-const API_BASE_URL = 'https://issuer.humanity.org';
+// Local API Route URL
+const API_ROUTE_URL = '/api/credentials';
 
-// API 클라이언트 설정 - 실제 API 키는 환경 변수로 설정해야 합니다
+// Client-side API call configuration
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: '',
   headers: {
     'Content-Type': 'application/json',
     'Accept': '*/*',
-    // API 키는 .env.local 파일에 설정해야 합니다: NEXT_PUBLIC_HUMANITY_API_KEY=your_api_key
-    'X-API-Token': process.env.NEXT_PUBLIC_HUMANITY_API_KEY || 'REPLACE_WITH_YOUR_API_KEY',
   },
 });
 
 export const humanityApi = {
-  // 자격 증명 발급
+  // Issue credential
   issueCredential: async (
     claims: Record<string, any>,
     subject_address: string
   ): Promise<ApiResponse<VerifiableCredential>> => {
     try {
-      const response = await api.post<{
-        message: string,
-        credential: VerifiableCredential
-      }>('/credentials/issue', {
-        claims,
-        subject_address
+      const response = await api.post(API_ROUTE_URL, {
+        endpoint: '/credentials/issue',
+        payload: {
+          claims,
+          subject_address
+        }
       });
       
       return {
@@ -37,21 +35,21 @@ export const humanityApi = {
     } catch (error: any) {
       return {
         success: false,
-        error: error.response?.data?.message || error.message || '자격 증명 발급에 실패했습니다',
+        error: error.response?.data?.error || error.message || 'Failed to issue credential',
       };
     }
   },
 
-  // 자격 증명 검증
+  // Verify credential
   verifyCredential: async (
     credential: VerifiableCredential
   ): Promise<ApiResponse<{ isValid: boolean, message: string }>> => {
     try {
-      const response = await api.post<{ 
-        isValid: boolean, 
-        message: string 
-      }>('/credentials/verify', {
-        credential
+      const response = await api.post(API_ROUTE_URL, {
+        endpoint: '/credentials/verify',
+        payload: {
+          credential
+        }
       });
       
       return {
@@ -61,21 +59,21 @@ export const humanityApi = {
     } catch (error: any) {
       return {
         success: false,
-        error: error.response?.data?.message || error.message || '자격 증명 검증에 실패했습니다',
+        error: error.response?.data?.error || error.message || 'Failed to verify credential',
       };
     }
   },
 
-  // 자격 증명 취소
+  // Revoke credential
   revokeCredential: async (
     credentialId: string
   ): Promise<ApiResponse<{ status: string, message: string }>> => {
     try {
-      const response = await api.post<{ 
-        status: string, 
-        message: string 
-      }>('/credentials/revoke', {
-        credentialId
+      const response = await api.post(API_ROUTE_URL, {
+        endpoint: '/credentials/revoke',
+        payload: {
+          credentialId
+        }
       });
       
       return {
@@ -85,18 +83,17 @@ export const humanityApi = {
     } catch (error: any) {
       return {
         success: false,
-        error: error.response?.data?.message || error.message || '자격 증명 취소에 실패했습니다',
+        error: error.response?.data?.error || error.message || 'Failed to revoke credential',
       };
     }
   },
 
-  // 자격 증명 목록 조회
+  // List credentials
   listCredentials: async (
     holderDid?: string
   ): Promise<ApiResponse<VerifiableCredential[]>> => {
     try {
-      const url = holderDid ? `/credentials/list?holderDid=${holderDid}` : '/credentials/list';
-      const response = await api.get<{ data: VerifiableCredential[] }>(url);
+      const response = await api.get(API_ROUTE_URL);
       
       return {
         success: true,
@@ -105,7 +102,7 @@ export const humanityApi = {
     } catch (error: any) {
       return {
         success: false,
-        error: error.response?.data?.message || error.message || '자격 증명 목록 조회에 실패했습니다',
+        error: error.response?.data?.error || error.message || 'Failed to retrieve credential list',
       };
     }
   }

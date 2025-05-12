@@ -1,84 +1,84 @@
-# TrustDate 설치 및 실행 가이드
+# TrustDate Installation and Execution Guide
 
-## 시스템 요구사항
+## System Requirements
 
-- Node.js 16.x 이상
-- npm 7.x 이상 또는 yarn 1.22.x 이상
+- Node.js 16.x or higher
+- npm 7.x or higher or yarn 1.22.x or higher
 
-## 설치 방법
+## Installation Method
 
-1. 저장소 클론하기
+1. Clone the repository
 
 ```bash
 git clone https://github.com/your-username/trustdate.git
 cd trustdate
 ```
 
-2. 의존성 설치하기
+2. Install dependencies
 
 ```bash
-# npm 사용
+# Using npm
 npm install
 
-# 또는 yarn 사용
+# Or using yarn
 yarn install
 ```
 
-3. 환경 변수 설정 (필요한 경우)
+3. Set environment variables (if needed)
 
 ```bash
-# .env.local 파일을 생성하여 필요한 환경 변수 설정
+# Create a .env.local file to set necessary environment variables
 cp .env.example .env.local
 ```
 
-4. 개발 서버 실행하기
+4. Run the development server
 
 ```bash
-# npm 사용
+# Using npm
 npm run dev
 
-# 또는 yarn 사용
+# Or using yarn
 yarn dev
 ```
 
-이제 브라우저에서 `http://localhost:3000`으로 접속하여 TrustDate 애플리케이션을 사용할 수 있습니다.
+Now you can access the TrustDate application in your browser at `http://localhost:3000`.
 
-## 빌드 및 프로덕션 실행
+## Build and Production Execution
 
-1. 애플리케이션 빌드하기
+1. Build the application
 
 ```bash
-# npm 사용
+# Using npm
 npm run build
 
-# 또는 yarn 사용
+# Or using yarn
 yarn build
 ```
 
-2. 프로덕션 서버 실행하기
+2. Run the production server
 
 ```bash
-# npm 사용
+# Using npm
 npm run start
 
-# 또는 yarn 사용
+# Or using yarn
 yarn start
 ```
 
-## 특별 참고사항
+## Special Notes
 
-### Humanity Protocol API 연동
+### Humanity Protocol API Integration
 
-현재 구현에서는 해커톤 환경에 맞춰 Humanity Protocol API를 모의(mock) 구현으로 대체하고 있습니다. 실제 Humanity Protocol API와 연동하려면 다음 단계를 따르세요:
+The current implementation replaces the Humanity Protocol API with a mock implementation to suit the hackathon environment. To integrate with the actual Humanity Protocol API, follow these steps:
 
-1. Humanity Protocol에서 API 키 발급받기
-2. `.env.local` 파일에 API 키 및 엔드포인트 설정
-3. `src/services/humanityApi.ts` 파일 업데이트:
-   - API 베이스 URL을 실제 Humanity Protocol API 엔드포인트로 변경
-   - API 요청 헤더에 인증 정보 추가
+1. Obtain an API key from Humanity Protocol
+2. Set the API key and endpoint in the `.env.local` file
+3. Update the `src/services/humanityApi.ts` file:
+   - Change the API base URL to the actual Humanity Protocol API endpoint
+   - Add authentication information to API request headers
 
 ```typescript
-// src/services/humanityApi.ts 파일 예시 수정
+// Example modification to src/services/humanityApi.ts file
 const API_BASE_URL = process.env.HUMANITY_API_URL || 'https://api.humanity.example';
 
 const api = axios.create({
@@ -90,46 +90,46 @@ const api = axios.create({
 });
 ```
 
-### 데이터베이스 연동
+### Database Integration
 
-현재 구현에서는 인메모리 데이터 구조를 사용하고 있습니다. 실제 데이터베이스를 연동하려면:
+The current implementation uses in-memory data structures. To integrate with an actual database:
 
-1. 선호하는 데이터베이스 서비스 설정 (MongoDB, PostgreSQL 등)
-2. 해당 데이터베이스에 맞는 ORM 또는 드라이버 설치
-3. 사용자, 프로필, 매칭, 메시지 등의 데이터 모델 구현
-4. API 라우트와 데이터베이스 연동 로직 구현
+1. Set up your preferred database service (MongoDB, PostgreSQL, etc.)
+2. Install the appropriate ORM or driver for that database
+3. Implement data models for users, profiles, matches, messages, etc.
+4. Implement API routes and database integration logic
 
-## 트러블슈팅
+## Troubleshooting
 
-**문제: 실행 중 "Module not found" 오류 발생**
+**Problem: "Module not found" error during execution**
 
-이 문제는 의존성이 제대로 설치되지 않았을 때 발생할 수 있습니다. 다음 명령을 시도해보세요:
+This problem can occur when dependencies are not properly installed. Try the following command:
 
 ```bash
 npm install
 ```
 
-**문제: API 연결 오류**
+**Problem: API connection error**
 
-Humanity Protocol API 연결 오류가 발생하면:
+If a Humanity Protocol API connection error occurs:
 
-1. API 키와 엔드포인트 URL이 올바른지 확인
-2. API 서비스가 실행 중인지 확인
-3. 네트워크 연결 확인
+1. Verify that the API key and endpoint URL are correct
+2. Verify that the API service is running
+3. Check network connectivity
 
-**문제: 스타일이 제대로 적용되지 않음**
+**Problem: Styles not applied properly**
 
-Tailwind CSS가 제대로 작동하지 않는 경우:
+If Tailwind CSS is not working properly:
 
 ```bash
 npm run build:css
 npm run dev
 ```
 
-## 후원 및 기여
+## Sponsorship and Contributions
 
-TrustDate는 오픈 소스 프로젝트입니다. 기여를 원하시면 GitHub 저장소에서 이슈를 확인하거나 풀 리퀘스트를 보내주세요.
+TrustDate is an open source project. If you wish to contribute, check the issues in the GitHub repository or send a pull request.
 
-## 라이선스
+## License
 
-MIT 라이선스 
+MIT License 

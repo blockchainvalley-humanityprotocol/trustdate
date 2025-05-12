@@ -1,4 +1,4 @@
-// Humanity Protocol API 관련 타입
+// Humanity Protocol API related types
 export interface VerifiableCredential {
   '@context': string[];
   type: string[];
@@ -26,7 +26,7 @@ export interface VerifiableCredential {
   };
 }
 
-// 사용자 프로필 타입
+// User profile type
 export interface UserProfile {
   id: string;
   displayName: string;
@@ -39,12 +39,12 @@ export interface UserProfile {
   conversations: string[];
   createdAt: string;
   lastActive: string;
-  walletAddress?: string; // 메타마스크 지갑 주소
-  heartRateData?: HeartRateData[]; // 다른 프로필 보면서 측정한 심장 박동수 데이터
-  heartRateThreshold?: number; // 매칭에 필요한 심장 박동 변화율 기준 (기본값: 15%)
+  walletAddress?: string; // MetaMask wallet address
+  heartRateData?: HeartRateData[]; // Heart rate data measured while viewing other profiles
+  heartRateThreshold?: number; // Heart rate change threshold required for matching (default: 15%)
 }
 
-// 메타마스크 인증 관련 타입
+// MetaMask authentication related types
 export interface MetamaskAuthResult {
   success: boolean;
   address?: string;
@@ -55,7 +55,7 @@ export interface MetamaskAuthResult {
   error?: string;
 }
 
-// 매칭 타입
+// Matching type
 export interface Match {
   id: string;
   users: [string, string];
@@ -64,7 +64,7 @@ export interface Match {
   updatedAt: string;
 }
 
-// 메시지 타입
+// Message type
 export interface Message {
   id: string;
   conversationId: string;
@@ -75,7 +75,7 @@ export interface Message {
   read: boolean;
 }
 
-// 대화 타입
+// Conversation type
 export interface Conversation {
   id: string;
   participants: [string, string];
@@ -84,19 +84,19 @@ export interface Conversation {
   lastMessageAt: string;
 }
 
-// API 응답 타입
+// API response type
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;
   error?: string;
 }
 
-// 심장 박동수 관련 타입 추가
+// Heart rate related types
 export interface HeartRateData {
   userId: string;
   targetUserId: string;
   timestamp: string;
-  baselineRate: number; // 기본 심장 박동수
-  viewingRate: number;  // 프로필 열람 시 심장 박동수
-  percentageChange: number; // 변화율 (%)
+  baselineRate: number; // Baseline heart rate
+  viewingRate: number;  // Heart rate while viewing profile
+  percentageChange: number;
 } 

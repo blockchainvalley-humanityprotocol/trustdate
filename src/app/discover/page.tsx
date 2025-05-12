@@ -9,11 +9,11 @@ import ProfileCard from '@/components/ProfileCard';
 const dummyProfiles: UserProfile[] = [
   {
     id: 'user1',
-    displayName: '비탈릭 부테린',
-    bio: '이더리움의 창시자이자 블록체인 기술의 선구자입니다. 암호화폐와 탈중앙화 기술에 관심이 많으며 개발자 커뮤니티에 기여하고 있습니다.',
+    displayName: 'Vitalik Buterin',
+    bio: 'Founder of Ethereum and pioneer in blockchain technology. Interested in cryptocurrency and decentralized technology, and contributing to the developer community.',
     avatarUrl: '/images/eth1.png',
-    location: '싱가포르',
-    interests: ['블록체인', '암호화폐', '프로그래밍', '철학', '탈중앙화'],
+    location: 'Singapore',
+    interests: ['Blockchain', 'Cryptocurrency', 'Programming', 'Philosophy', 'Decentralization'],
     credentials: [
       {
         id: 'cred1_1',
@@ -47,8 +47,8 @@ const dummyProfiles: UserProfile[] = [
         issuanceDate: '2023-09-01T09:30:00Z',
         expirationDate: '2026-09-01T09:30:00Z',
         claims: {
-          institution: '토론토 대학교',
-          degree: '컴퓨터과학'
+          institution: 'University of Toronto',
+          degree: 'Computer Science'
         },
         status: 'active'
       },
@@ -60,8 +60,8 @@ const dummyProfiles: UserProfile[] = [
         issuanceDate: '2023-09-01T09:30:00Z',
         expirationDate: '2026-09-01T09:30:00Z',
         claims: {
-          company: '이더리움 재단',
-          position: '창립자'
+          company: 'Ethereum Foundation',
+          position: 'Founder'
         },
         status: 'active'
       }
@@ -73,11 +73,11 @@ const dummyProfiles: UserProfile[] = [
   },
   {
     id: 'user2',
-    displayName: '일론 머스크',
-    bio: '테슬라와 스페이스X의 CEO이자 X(트위터)의 소유주입니다. 혁신적인 기술과 우주 여행, 지속 가능한 에너지에 열정을 가지고 있습니다.',
+    displayName: 'Elon Musk',
+    bio: 'CEO of Tesla and SpaceX, and owner of X (Twitter). Passionate about innovative technology, space travel, and sustainable energy.',
     avatarUrl: '/images/musk1.png',
-    location: '텍사스 오스틴',
-    interests: ['우주여행', '전기차', '인공지능', '지속가능성', '화성 이주'],
+    location: 'Austin, Texas',
+    interests: ['Space Travel', 'Electric Vehicles', 'AI', 'Sustainability', 'Mars Colonization'],
     credentials: [
       {
         id: 'cred2_1',
@@ -111,8 +111,8 @@ const dummyProfiles: UserProfile[] = [
         issuanceDate: '2023-09-05T09:30:00Z',
         expirationDate: '2026-09-05T09:30:00Z',
         claims: {
-          institution: '펜실베니아 대학교',
-          degree: '물리학 & 경제학'
+          institution: 'University of Pennsylvania',
+          degree: 'Physics & Economics'
         },
         status: 'active'
       },
@@ -124,7 +124,7 @@ const dummyProfiles: UserProfile[] = [
         issuanceDate: '2023-09-05T09:30:00Z',
         expirationDate: '2026-09-05T09:30:00Z',
         claims: {
-          company: '테슬라, 스페이스X',
+          company: 'Tesla, SpaceX',
           position: 'CEO'
         },
         status: 'active'
@@ -137,11 +137,11 @@ const dummyProfiles: UserProfile[] = [
   },
   {
     id: 'user3',
-    displayName: '도널드 트럼프',
-    bio: '미국의 전 대통령이자 사업가입니다. 부동산 개발과 정치에서 활발히 활동했으며, 소셜 미디어 플랫폼 Truth Social의 설립자입니다.',
+    displayName: 'Donald Trump',
+    bio: 'Former U.S. President and businessman. Active in real estate development and politics, and founder of the social media platform Truth Social.',
     avatarUrl: '/images/trump1.png',
-    location: '플로리다 팜비치',
-    interests: ['골프', '정치', '부동산', '협상', '미디어'],
+    location: 'Palm Beach, Florida',
+    interests: ['Golf', 'Politics', 'Real Estate', 'Negotiation', 'Media'],
     credentials: [
       {
         id: 'cred3_1',
@@ -175,8 +175,8 @@ const dummyProfiles: UserProfile[] = [
         issuanceDate: '2023-09-10T09:30:00Z',
         expirationDate: '2026-09-10T09:30:00Z',
         claims: {
-          institution: '와튼 스쿨',
-          degree: '경제학'
+          institution: 'Wharton School',
+          degree: 'Economics'
         },
         status: 'active'
       },
@@ -188,8 +188,8 @@ const dummyProfiles: UserProfile[] = [
         issuanceDate: '2023-09-15T09:30:00Z',
         expirationDate: '2024-09-15T09:30:00Z',
         claims: {
-          company: '미국 연방정부',
-          position: '전 대통령'
+          company: 'U.S. Federal Government',
+          position: 'Former President'
         },
         status: 'active'
       }
@@ -215,7 +215,7 @@ const DiscoverPage = () => {
   const [useHeartRateMatching, setUseHeartRateMatching] = useState(true);
 
   useEffect(() => {
-    // 실제 구현에서는 API를 호출하여 프로필 데이터를 가져옴
+    // In actual implementation, call API to get profile data
     setTimeout(() => {
       setProfiles(dummyProfiles);
       setFilteredProfiles(dummyProfiles);
@@ -224,10 +224,10 @@ const DiscoverPage = () => {
   }, []);
 
   const handleMatch = (profileId: string) => {
-    // 실제 구현에서는 API를 통해 매치 요청을 보냄
-    // 심장 박동수 매칭이 활성화되어 있으면 실제 심장 박동수 측정 필요
+    // In actual implementation, send match request through API
+    // If heart rate matching is enabled, actual heart rate measurement is required
     if (useHeartRateMatching) {
-      // 심장 박동수 측정을 통해 매칭이 가능한지 확인
+      // Check if matching is possible through heart rate measurement
       const profile = profiles.find(p => p.id === profileId);
       if (profile) {
         const heartRateData = localStorage.getItem('heartRateData');
@@ -239,25 +239,25 @@ const DiscoverPage = () => {
           
           if (userData && userData.percentageChange >= 15) {
             setPendingMatches(prev => [...prev, profileId]);
-            alert(`${profile.displayName}님에게 관심을 표시했습니다! 심장 박동 변화: ${userData.percentageChange.toFixed(1)}%`);
+            alert(`You've shown interest in ${profile.displayName}! Heart rate change: ${userData.percentageChange.toFixed(1)}%`);
           } else {
-            alert(`매칭을 위해서는 ${profile.displayName}님의 큰 사진을 보면서 심장 박동수 측정이 필요합니다.`);
+            alert(`Heart rate measurement with ${profile.displayName}'s full photo is required for matching.`);
           }
         } else {
-          alert(`매칭을 위해서는 ${profile.displayName}님의 큰 사진을 보면서 심장 박동수 측정이 필요합니다.`);
+          alert(`Heart rate measurement with ${profile.displayName}'s full photo is required for matching.`);
         }
       }
     } else {
-      // 심장 박동수 매칭이 비활성화되어 있으면 바로 매칭
+      // If heart rate matching is disabled, match immediately
       setPendingMatches(prev => [...prev, profileId]);
       const profile = profiles.find(p => p.id === profileId);
-      alert(`${profile?.displayName || profileId}님에게 관심을 표시했습니다!`);
+      alert(`You've shown interest in ${profile?.displayName || profileId}!`);
     }
   };
 
   const applyFilter = () => {
     const filtered = profiles.filter(profile => {
-      // 나이 필터링
+      // Age filtering
       const ageCredential = profile.credentials.find(c => c.type === 'age');
       if (ageCredential) {
         const age = ageCredential.claims.age as number;
@@ -266,7 +266,7 @@ const DiscoverPage = () => {
         }
       }
 
-      // 학력 필터링
+      // Education filtering
       if (filter.education && filter.education !== '') {
         const eduCredential = profile.credentials.find(c => c.type === 'education');
         if (!eduCredential || !eduCredential.claims.institution.includes(filter.education)) {
@@ -274,7 +274,7 @@ const DiscoverPage = () => {
         }
       }
 
-      // 관심사 필터링
+      // Interest filtering
       if (filter.interests.length > 0) {
         const hasMatchingInterest = profile.interests.some(interest => 
           filter.interests.includes(interest)
@@ -307,34 +307,34 @@ const DiscoverPage = () => {
     });
   };
 
-  // 모든 프로필의 관심사를 추출
+  // Extract all interests from profiles
   const allInterests = Array.from(new Set(profiles.flatMap(p => p.interests)));
 
   return (
     <main className="min-h-screen py-12 bg-gray-50">
-      {/* 헤더 */}
+      {/* Header */}
       <header className="w-full bg-white shadow-sm fixed top-0 z-10">
         <div className="container mx-auto flex justify-between items-center p-4">
           <Link href="/" className="text-2xl font-bold text-primary">TrustDate</Link>
           <nav className="flex gap-6">
-            <Link href="/discover" className="text-primary">탐색</Link>
-            <Link href="/matches" className="hover:text-primary">매치</Link>
-            <Link href="/messages" className="hover:text-primary">메시지</Link>
-            <Link href="/profile" className="hover:text-primary">프로필</Link>
+            <Link href="/discover" className="text-primary">Discover</Link>
+            <Link href="/matches" className="hover:text-primary">Matches</Link>
+            <Link href="/messages" className="hover:text-primary">Messages</Link>
+            <Link href="/profile" className="hover:text-primary">Profile</Link>
           </nav>
         </div>
       </header>
 
       <div className="container mx-auto px-4 mt-20">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* 필터 사이드바 */}
+          {/* Filter sidebar */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-lg shadow-md p-6 sticky top-24">
-              <h2 className="text-xl font-bold mb-4">필터</h2>
+              <h2 className="text-xl font-bold mb-4">Filters</h2>
               
               <div className="form-control mb-4">
                 <label className="label">
-                  <span className="label-text font-semibold">나이 범위</span>
+                  <span className="label-text font-semibold">Age Range</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input 
@@ -361,7 +361,7 @@ const DiscoverPage = () => {
               
               <div className="form-control mb-4">
                 <label className="label">
-                  <span className="label-text font-semibold">학력</span>
+                  <span className="label-text font-semibold">Education</span>
                 </label>
                 <select 
                   name="education"
@@ -369,16 +369,16 @@ const DiscoverPage = () => {
                   onChange={handleFilterChange}
                   className="select select-bordered w-full"
                 >
-                  <option value="">모든 학력</option>
-                  <option value="토론토 대학교">토론토 대학교</option>
-                  <option value="펜실베니아 대학교">펜실베니아 대학교</option>
-                  <option value="와튼 스쿨">와튼 스쿨</option>
+                  <option value="">All Education</option>
+                  <option value="University of Toronto">University of Toronto</option>
+                  <option value="University of Pennsylvania">University of Pennsylvania</option>
+                  <option value="Wharton School">Wharton School</option>
                 </select>
               </div>
               
               <div className="mb-4">
                 <label className="label">
-                  <span className="label-text font-semibold">관심사</span>
+                  <span className="label-text font-semibold">Interests</span>
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {allInterests.map((interest, index) => (
@@ -404,7 +404,7 @@ const DiscoverPage = () => {
               
               <div className="form-control mb-4">
                 <label className="label cursor-pointer">
-                  <span className="label-text font-semibold">💓 심장 박동수 매칭 사용</span>
+                  <span className="label-text font-semibold">💓 Use Heart Rate Matching</span>
                   <input 
                     type="checkbox" 
                     className="toggle toggle-primary" 
@@ -413,7 +413,7 @@ const DiscoverPage = () => {
                   />
                 </label>
                 <p className="text-xs text-gray-500 mt-1">
-                  심장이 뛰어야 사랑입니다! 활성화하면 프로필 열람 시 심장 박동수가 15% 이상 증가해야 매칭 가능합니다.
+                  Your heart must beat for true love! When enabled, your heart rate must increase by 15% or more when viewing a profile to enable matching.
                 </p>
               </div>
               
@@ -421,14 +421,14 @@ const DiscoverPage = () => {
                 onClick={applyFilter}
                 className="btn btn-primary w-full mt-4"
               >
-                필터 적용
+                Apply Filters
               </button>
             </div>
           </div>
           
-          {/* 프로필 목록 */}
+          {/* Profile list */}
           <div className="lg:w-3/4">
-            <h1 className="text-3xl font-bold mb-6">추천 프로필</h1>
+            <h1 className="text-3xl font-bold mb-6">Recommended Profiles</h1>
             
             {loading ? (
               <div className="flex justify-center items-center h-64">
@@ -449,8 +449,8 @@ const DiscoverPage = () => {
               </div>
             ) : (
               <div className="bg-white rounded-lg shadow-md p-8 text-center">
-                <h3 className="text-xl font-semibold mb-2">조건에 맞는 프로필이 없습니다</h3>
-                <p className="text-gray-600 mb-4">필터 조건을 변경해보세요.</p>
+                <h3 className="text-xl font-semibold mb-2">No profiles match your criteria</h3>
+                <p className="text-gray-600 mb-4">Try changing your filter settings.</p>
                 <button 
                   onClick={() => {
                     setFilter({
@@ -463,7 +463,7 @@ const DiscoverPage = () => {
                   }}
                   className="btn btn-outline"
                 >
-                  필터 초기화
+                  Reset Filters
                 </button>
               </div>
             )}
