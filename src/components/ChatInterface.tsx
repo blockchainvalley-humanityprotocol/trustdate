@@ -25,14 +25,14 @@ const ChatInterface = ({
   const [message, setMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  // partnerProfile과 partner 둘 중 하나 사용
+  // Use either partnerProfile or partner
   const chatPartner = partner || partnerProfile;
   
   if (!chatPartner) {
     return <div className="p-6 text-center">Could not find conversation partner.</div>;
   }
 
-  // 메시지 목록 자동 스크롤
+  // Auto-scroll message list
   useEffect(() => {
     scrollToBottom();
   }, [conversation.messages]);
@@ -47,7 +47,7 @@ const ChatInterface = ({
     setMessage('');
   };
 
-  // 엔터 키로 메시지 보내기
+  // Send message with Enter key
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -55,7 +55,7 @@ const ChatInterface = ({
     }
   };
 
-  // 메시지 날짜별 그룹화
+  // Group messages by date
   const groupMessagesByDate = () => {
     const groups: { [key: string]: Message[] } = {};
     
@@ -74,7 +74,7 @@ const ChatInterface = ({
 
   return (
     <div className={`flex flex-col h-full ${className}`}>
-      {/* 상대방 프로필 헤더 */}
+      {/* Partner profile header */}
       <div className="p-4 border-b flex items-center bg-gradient-to-r from-love-light/40 to-love-purple/30">
         <div className="avatar mr-3">
           <div className="w-12 h-12 rounded-full ring ring-love-pink/30 ring-offset-2">
@@ -106,7 +106,7 @@ const ChatInterface = ({
         </div>
       </div>
       
-      {/* 메시지 목록 */}
+      {/* Message list */}
       <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-white to-love-light/5">
         {Object.entries(messageGroups).map(([date, messages]) => (
           <div key={date}>
@@ -164,7 +164,7 @@ const ChatInterface = ({
         <div ref={messagesEndRef} />
       </div>
       
-      {/* 메시지 입력 */}
+      {/* Message input */}
       <div className="p-4 border-t border-love-light/20 bg-white">
         <div className="flex items-center">
           <motion.button 

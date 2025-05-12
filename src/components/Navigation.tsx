@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import HeartIcon from './HeartIcon';
+import Image from 'next/image';
 
 const navItems = [
   { path: '/', label: 'Home' },
@@ -25,8 +26,13 @@ export default function Navigation() {
     >
       <div className="container mx-auto flex justify-between items-center p-4">
         <Link href="/" className="text-2xl font-bold love-title flex items-center gap-2">
-          <HeartIcon size={28} fill={true} pulse={true} />
-          TrustDate
+          <img 
+            src="/images/logo.png" 
+            alt="Beats Logo" 
+            width={100} 
+            height={40} 
+            className="h-10 w-auto" 
+          />
         </Link>
         
         <nav className="hidden md:flex gap-6">
@@ -82,7 +88,7 @@ export default function Navigation() {
                       </svg>
                     )}
                     {item.path === '/matches' && (
-                      <HeartIcon size={20} color={isActive ? '#ff9ebb' : '#4b5563'} fill={isActive} />
+                      <HeartIcon size={20} color={isActive ? '#FF5858' : '#4b5563'} fill={isActive} />
                     )}
                     {item.path === '/messages' && (
                       <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${isActive ? 'text-love-pink' : 'text-gray-600'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">

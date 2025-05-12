@@ -8,9 +8,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "love-pink": "#ff9ebb",
-        "love-light": "#ffcbd7",
-        "love-dark": "#e56b87",
+        "love-pink": "#FF5858",
+        "love-light": "#FF8080",
+        "love-dark": "#E63E3E",
         "love-accent": "#b8e1ff",
         "love-purple": "#d9a9ff",
       },
@@ -19,9 +19,9 @@ module.exports = {
   daisyui: {
     themes: [
       {
-        trustdate: {
-          "primary": "#ff9ebb",
-          "primary-focus": "#e56b87",
+        beats: {
+          "primary": "#FF5858",
+          "primary-focus": "#E63E3E",
           "primary-content": "#ffffff",
           
           "secondary": "#d9a9ff",

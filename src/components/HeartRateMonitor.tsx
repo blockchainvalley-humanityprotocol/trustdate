@@ -117,17 +117,26 @@ const HeartRateMonitor = ({ userId, targetUserId, onMeasurementComplete }: Heart
 
   // Return color based on interest level
   const getInterestColor = () => {
-    if (!interestLevel) return 'bg-gray-200';
+    if (!percentageChange) return 'bg-gray-200';
     
-    switch (interestLevel) {
-      case 'high':
-        return 'bg-red-500';
-      case 'medium':
-        return 'bg-yellow-500';
-      case 'low':
-        return 'bg-blue-500';
-      default:
-        return 'bg-gray-200';
+    if (percentageChange > 0) {
+      // Heart rate increased - use red color scale
+      if (percentageChange >= 20) {
+        return 'bg-red-600'; // High increase
+      } else if (percentageChange >= 10) {
+        return 'bg-red-500'; // Medium increase
+      } else {
+        return 'bg-red-400'; // Low increase
+      }
+    } else {
+      // Heart rate decreased - use blue color scale
+      if (percentageChange <= -10) {
+        return 'bg-blue-600'; // High decrease
+      } else if (percentageChange <= -5) {
+        return 'bg-blue-500'; // Medium decrease
+      } else {
+        return 'bg-blue-400'; // Low decrease
+      }
     }
   };
 

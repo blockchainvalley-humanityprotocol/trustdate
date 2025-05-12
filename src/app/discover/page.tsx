@@ -20,7 +20,7 @@ const dummyProfiles: UserProfile[] = [
         type: 'identity',
         issuer: 'Humanity Protocol',
         holder: 'user1',
-        issuanceDate: '2023-10-15T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2024-10-15T09:30:00Z',
         claims: {
           verified: true
@@ -32,7 +32,7 @@ const dummyProfiles: UserProfile[] = [
         type: 'age',
         issuer: 'Humanity Protocol',
         holder: 'user1',
-        issuanceDate: '2023-10-15T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2024-10-15T09:30:00Z',
         claims: {
           age: 30
@@ -57,7 +57,7 @@ const dummyProfiles: UserProfile[] = [
         type: 'employment',
         issuer: 'Ethereum Foundation',
         holder: 'user1',
-        issuanceDate: '2023-09-01T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2026-09-01T09:30:00Z',
         claims: {
           company: 'Ethereum Foundation',
@@ -68,8 +68,8 @@ const dummyProfiles: UserProfile[] = [
     ],
     matches: [],
     conversations: [],
-    createdAt: '2023-10-01T12:00:00Z',
-    lastActive: '2023-10-21T15:45:00Z'
+    createdAt: '2025-05-12T12:00:00Z',
+    lastActive: '2025-05-12T15:45:00Z'
   },
   {
     id: 'user2',
@@ -84,7 +84,7 @@ const dummyProfiles: UserProfile[] = [
         type: 'identity',
         issuer: 'Humanity Protocol',
         holder: 'user2',
-        issuanceDate: '2023-10-10T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2024-10-10T09:30:00Z',
         claims: {
           verified: true
@@ -96,7 +96,7 @@ const dummyProfiles: UserProfile[] = [
         type: 'age',
         issuer: 'Humanity Protocol',
         holder: 'user2',
-        issuanceDate: '2023-10-10T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2024-10-10T09:30:00Z',
         claims: {
           age: 52
@@ -121,7 +121,7 @@ const dummyProfiles: UserProfile[] = [
         type: 'employment',
         issuer: 'Tesla & SpaceX',
         holder: 'user2',
-        issuanceDate: '2023-09-05T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2026-09-05T09:30:00Z',
         claims: {
           company: 'Tesla, SpaceX',
@@ -132,8 +132,8 @@ const dummyProfiles: UserProfile[] = [
     ],
     matches: [],
     conversations: [],
-    createdAt: '2023-10-05T12:00:00Z',
-    lastActive: '2023-10-22T10:30:00Z'
+    createdAt: '2025-05-12T12:00:00Z',
+    lastActive: '2025-05-12T10:30:00Z'
   },
   {
     id: 'user3',
@@ -148,7 +148,7 @@ const dummyProfiles: UserProfile[] = [
         type: 'identity',
         issuer: 'Humanity Protocol',
         holder: 'user3',
-        issuanceDate: '2023-10-12T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2024-10-12T09:30:00Z',
         claims: {
           verified: true
@@ -160,7 +160,7 @@ const dummyProfiles: UserProfile[] = [
         type: 'age',
         issuer: 'Humanity Protocol',
         holder: 'user3',
-        issuanceDate: '2023-10-12T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2024-10-12T09:30:00Z',
         claims: {
           age: 77
@@ -185,7 +185,7 @@ const dummyProfiles: UserProfile[] = [
         type: 'employment',
         issuer: 'United States Government',
         holder: 'user3',
-        issuanceDate: '2023-09-15T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2024-09-15T09:30:00Z',
         claims: {
           company: 'U.S. Federal Government',
@@ -196,8 +196,8 @@ const dummyProfiles: UserProfile[] = [
     ],
     matches: [],
     conversations: [],
-    createdAt: '2023-10-03T12:00:00Z',
-    lastActive: '2023-10-22T14:20:00Z'
+    createdAt: '2025-05-12T12:00:00Z',
+    lastActive: '2025-05-12T14:20:00Z'
   }
 ];
 

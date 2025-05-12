@@ -7,7 +7,7 @@ import ChatInterface from '@/components/ChatInterface';
 import HeartIcon from '@/components/HeartIcon';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// 더미 사용자 데이터
+// Dummy user data
 const currentUser: UserProfile = {
   id: 'user123',
   displayName: 'John Mo',
@@ -18,11 +18,11 @@ const currentUser: UserProfile = {
   credentials: [],
   matches: ['user1', 'user2', 'user3'],
   conversations: ['conv1', 'conv2', 'conv3'],
-  createdAt: '2023-10-01T00:00:00Z',
-  lastActive: '2023-10-22T18:30:00Z'
+  createdAt: '2025-05-12T00:00:00Z',
+  lastActive: '2025-05-12T18:30:00Z'
 };
 
-// 더미 대화 상대 프로필
+// Dummy conversation partner profiles
 const partnerProfiles: { [key: string]: UserProfile } = {
   user1: {
     id: 'user1',
@@ -34,8 +34,8 @@ const partnerProfiles: { [key: string]: UserProfile } = {
     credentials: [],
     matches: ['user123'],
     conversations: ['conv1'],
-    createdAt: '2023-10-01T12:00:00Z',
-    lastActive: '2023-10-21T15:45:00Z'
+    createdAt: '2025-05-12T12:00:00Z',
+    lastActive: '2025-05-12T15:45:00Z'
   },
   user2: {
     id: 'user2',
@@ -47,8 +47,8 @@ const partnerProfiles: { [key: string]: UserProfile } = {
     credentials: [],
     matches: ['user123'],
     conversations: ['conv2'],
-    createdAt: '2023-10-05T12:00:00Z',
-    lastActive: '2023-10-22T10:30:00Z'
+    createdAt: '2025-05-12T12:00:00Z',
+    lastActive: '2025-05-12T10:30:00Z'
   },
   user3: {
     id: 'user3',
@@ -60,12 +60,12 @@ const partnerProfiles: { [key: string]: UserProfile } = {
     credentials: [],
     matches: ['user123'],
     conversations: ['conv3'],
-    createdAt: '2023-10-03T12:00:00Z',
-    lastActive: '2023-10-22T14:20:00Z'
+    createdAt: '2025-05-12T12:00:00Z',
+    lastActive: '2025-05-12T14:20:00Z'
   }
 };
 
-// 더미 대화 데이터
+// Dummy conversation data
 const dummyConversations: { [key: string]: Conversation } = {
   conv1: {
     id: 'conv1',
@@ -77,7 +77,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         senderId: 'user1',
         receiverId: 'user123',
         content: 'Hello! Thank you for showing interest in my profile. Are you a blockchain developer?',
-        createdAt: '2023-10-20T09:30:00Z',
+        createdAt: '2025-05-12T09:30:00Z',
         read: true
       },
       {
@@ -86,7 +86,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         senderId: 'user123',
         receiverId: 'user1',
         content: 'Vitalik! I\'m a huge fan. I got into blockchain development after reading the Ethereum whitepaper.',
-        createdAt: '2023-10-20T09:35:00Z',
+        createdAt: '2025-05-12T09:35:00Z',
         read: true
       },
       {
@@ -95,7 +95,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         senderId: 'user1',
         receiverId: 'user123',
         content: 'Wow, that\'s great to hear. What kind of projects are you interested in? Are you working in DeFi or NFTs?',
-        createdAt: '2023-10-20T09:40:00Z',
+        createdAt: '2025-05-12T09:40:00Z',
         read: true
       },
       {
@@ -104,7 +104,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         senderId: 'user123',
         receiverId: 'user1',
         content: 'Recently I\'ve been very interested in Zero-Knowledge Proofs (ZK) and Layer 2 solutions. I think Ethereum scalability is really important.',
-        createdAt: '2023-10-20T09:45:00Z',
+        createdAt: '2025-05-12T09:45:00Z',
         read: true
       },
       {
@@ -113,12 +113,12 @@ const dummyConversations: { [key: string]: Conversation } = {
         senderId: 'user1',
         receiverId: 'user123',
         content: 'Zero-knowledge proofs are fascinating! They\'re the future of Ethereum along with rollups. There\'s a developer meetup in Singapore next week, would you like to join?',
-        createdAt: '2023-10-20T09:50:00Z',
+        createdAt: '2025-05-12T09:50:00Z',
         read: true
       }
     ],
-    createdAt: '2023-10-20T09:30:00Z',
-    lastMessageAt: '2023-10-20T09:50:00Z'
+    createdAt: '2025-05-12T09:30:00Z',
+    lastMessageAt: '2025-05-12T09:50:00Z'
   },
   conv2: {
     id: 'conv2',
@@ -130,7 +130,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         senderId: 'user123',
         receiverId: 'user2',
         content: 'Elon, I\'m really impressed by Tesla and SpaceX\'s innovative technologies. The Starship project is particularly impressive.',
-        createdAt: '2023-10-21T14:30:00Z',
+        createdAt: '2025-05-12T14:30:00Z',
         read: true
       },
       {
@@ -139,7 +139,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         senderId: 'user2',
         receiverId: 'user123',
         content: 'Thanks for your interest! Starship is an important step toward Mars colonization. Are you interested in space travel too?',
-        createdAt: '2023-10-21T14:35:00Z',
+        createdAt: '2025-05-12T14:35:00Z',
         read: true
       },
       {
@@ -148,7 +148,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         senderId: 'user123',
         receiverId: 'user2',
         content: 'Absolutely! I would love to participate in civilian space travel if it becomes more accessible. Living on Mars would be a dream come true.',
-        createdAt: '2023-10-21T14:40:00Z',
+        createdAt: '2025-05-12T14:40:00Z',
         read: true
       },
       {
@@ -157,12 +157,12 @@ const dummyConversations: { [key: string]: Conversation } = {
         senderId: 'user2',
         receiverId: 'user123',
         content: 'Great! Mars will be the first step in humanity\'s multi-planetary civilization. Are you also interested in AI or neuroscience? We\'re working on some exciting projects at Neuralink.',
-        createdAt: '2023-10-21T14:45:00Z',
+        createdAt: '2025-05-12T14:45:00Z',
         read: false
       }
     ],
-    createdAt: '2023-10-21T14:30:00Z',
-    lastMessageAt: '2023-10-21T14:45:00Z'
+    createdAt: '2025-05-12T14:30:00Z',
+    lastMessageAt: '2025-05-12T14:45:00Z'
   },
   conv3: {
     id: 'conv3',
@@ -174,7 +174,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         senderId: 'user3',
         receiverId: 'user123',
         content: 'Hello, John. Thanks for your interest. Korea\'s technology industry is truly impressive.',
-        createdAt: '2023-10-22T10:15:00Z',
+        createdAt: '2025-05-12T10:15:00Z',
         read: true
       },
       {
@@ -183,7 +183,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         senderId: 'user123',
         receiverId: 'user3',
         content: 'Thank you for your message, President Trump! Yes, Korea\'s tech industry is growing rapidly. I understand you\'re also interested in real estate development - which project do you find most memorable?',
-        createdAt: '2023-10-22T10:20:00Z',
+        createdAt: '2025-05-12T10:20:00Z',
         read: true
       },
       {
@@ -192,12 +192,12 @@ const dummyConversations: { [key: string]: Conversation } = {
         senderId: 'user3',
         receiverId: 'user123',
         content: 'Trump Tower is one of the most proud projects in my career. Top location, design, and quality. In negotiation, the most important thing is confidence and maintaining a strong position. I heard you\'re a developer - are you interested in platforms like Truth Social?',
-        createdAt: '2023-10-22T10:25:00Z',
+        createdAt: '2025-05-12T10:25:00Z',
         read: true
       }
     ],
-    createdAt: '2023-10-22T10:15:00Z',
-    lastMessageAt: '2023-10-22T10:25:00Z'
+    createdAt: '2025-05-12T10:15:00Z',
+    lastMessageAt: '2025-05-12T10:25:00Z'
   }
 };
 
@@ -256,17 +256,17 @@ const MessagesPage = () => {
     }));
   };
 
-  // 대화 목록을 최신 메시지 순으로 정렬
+  // Sort conversations by most recent message
   const sortedConversations = Object.values(conversations)
     .sort((a, b) => new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime());
 
-  // 선택된 대화의 상대방 프로필 가져오기
+  // Get partner profile for the selected conversation
   const getPartnerProfile = (conversation: Conversation) => {
     const partnerId = conversation.participants.find(id => id !== currentUser.id);
     return partnerId ? partnerProfiles[partnerId] : undefined;
   };
 
-  // 읽지 않은 메시지 수 계산
+  // Calculate unread message count
   const getUnreadCount = (conversation: Conversation) => {
     return conversation.messages.filter(msg => 
       msg.receiverId === currentUser.id && !msg.read
@@ -278,7 +278,7 @@ const MessagesPage = () => {
       <h1 className="text-3xl mb-8 love-title">My Messages</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* 대화 목록 */}
+        {/* Conversation list */}
         <div className="md:col-span-1 wave-animation">
           <div className="love-card p-0 overflow-hidden">
             <div className="p-4 bg-gradient-to-r from-love-pink/70 to-love-purple/70 text-white flex items-center">
@@ -321,7 +321,7 @@ const MessagesPage = () => {
                       <div className="flex justify-between items-center mb-1">
                         <h3 className="font-semibold truncate">{partner.displayName}</h3>
                         <span className="text-xs text-gray-500">
-                          {new Date(conversation.lastMessageAt).toLocaleDateString('ko-KR', {
+                          {new Date(conversation.lastMessageAt).toLocaleDateString('en-US', {
                             month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
                           })}
                         </span>
@@ -345,7 +345,7 @@ const MessagesPage = () => {
           </div>
         </div>
         
-        {/* 채팅 인터페이스 */}
+        {/* Chat interface */}
         <div className="md:col-span-2 relative">
           {selectedConversation ? (
             <>

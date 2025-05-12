@@ -16,7 +16,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   className = '' 
 }) => {
   useEffect(() => {
-    // GSAP 애니메이션 효과
+    // GSAP animation effects
     const tl = gsap.timeline();
     tl.from('.animated-title', {
       duration: 0.8,
@@ -32,7 +32,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
     }, '-=0.4');
   }, []);
 
-  // 제목을 개별 글자로 분리하여 애니메이션 적용
+  // Split title into individual letters for animation
   const titleLetters = title.split('').map((letter, index) => (
     <span 
       key={index} 

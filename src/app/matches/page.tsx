@@ -19,8 +19,8 @@ const currentUser: UserProfile = {
   credentials: [],
   matches: ['user1', 'user2', 'user3'],
   conversations: ['conv1', 'conv2', 'conv3'],
-  createdAt: '2023-10-01T00:00:00Z',
-  lastActive: '2023-10-22T18:30:00Z'
+  createdAt: '2025-05-12T00:00:00Z',
+  lastActive: '2025-05-12T18:30:00Z'
 };
 
 // 더미 매치 데이터
@@ -29,22 +29,22 @@ const dummyMatches: Match[] = [
     id: 'match1',
     users: ['user123', 'user1'],
     status: 'accepted',
-    createdAt: '2023-10-20T09:00:00Z',
-    updatedAt: '2023-10-20T10:00:00Z'
+    createdAt: '2025-05-12T09:00:00Z',
+    updatedAt: '2025-05-12T10:00:00Z'
   },
   {
     id: 'match2',
     users: ['user123', 'user2'],
     status: 'accepted',
-    createdAt: '2023-10-21T14:00:00Z',
-    updatedAt: '2023-10-21T15:30:00Z'
+    createdAt: '2025-05-12T14:00:00Z',
+    updatedAt: '2025-05-12T15:30:00Z'
   },
   {
     id: 'match3',
     users: ['user123', 'user3'],
     status: 'pending',
-    createdAt: '2023-10-22T11:00:00Z',
-    updatedAt: '2023-10-22T11:00:00Z'
+    createdAt: '2025-05-12T11:00:00Z',
+    updatedAt: '2025-05-12T11:00:00Z'
   }
 ];
 
@@ -63,7 +63,7 @@ const matchProfiles: { [key: string]: UserProfile } = {
         type: 'education',
         issuer: 'University of Toronto',
         holder: 'user1',
-        issuanceDate: '2023-09-01T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2026-09-01T09:30:00Z',
         claims: {
           institution: 'University of Toronto',
@@ -76,7 +76,7 @@ const matchProfiles: { [key: string]: UserProfile } = {
         type: 'employment',
         issuer: 'Ethereum Foundation',
         holder: 'user1',
-        issuanceDate: '2023-09-01T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2026-09-01T09:30:00Z',
         claims: {
           company: 'Ethereum Foundation',
@@ -87,8 +87,8 @@ const matchProfiles: { [key: string]: UserProfile } = {
     ],
     matches: ['user123'],
     conversations: ['conv1'],
-    createdAt: '2023-10-01T12:00:00Z',
-    lastActive: '2023-10-21T15:45:00Z'
+    createdAt: '2025-05-12T12:00:00Z',
+    lastActive: '2025-05-12T15:45:00Z'
   },
   user2: {
     id: 'user2',
@@ -103,7 +103,7 @@ const matchProfiles: { [key: string]: UserProfile } = {
         type: 'education',
         issuer: 'University of Pennsylvania',
         holder: 'user2',
-        issuanceDate: '2023-09-05T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2026-09-05T09:30:00Z',
         claims: {
           institution: 'University of Pennsylvania',
@@ -116,7 +116,7 @@ const matchProfiles: { [key: string]: UserProfile } = {
         type: 'employment',
         issuer: 'Tesla & SpaceX',
         holder: 'user2',
-        issuanceDate: '2023-09-05T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2026-09-05T09:30:00Z',
         claims: {
           company: 'Tesla, SpaceX',
@@ -127,8 +127,8 @@ const matchProfiles: { [key: string]: UserProfile } = {
     ],
     matches: ['user123'],
     conversations: ['conv2'],
-    createdAt: '2023-10-05T12:00:00Z',
-    lastActive: '2023-10-22T10:30:00Z'
+    createdAt: '2025-05-12T12:00:00Z',
+    lastActive: '2025-05-12T10:30:00Z'
   },
   user3: {
     id: 'user3',
@@ -143,7 +143,7 @@ const matchProfiles: { [key: string]: UserProfile } = {
         type: 'education',
         issuer: 'Wharton School',
         holder: 'user3',
-        issuanceDate: '2023-09-10T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2026-09-10T09:30:00Z',
         claims: {
           institution: 'Wharton School',
@@ -156,7 +156,7 @@ const matchProfiles: { [key: string]: UserProfile } = {
         type: 'employment',
         issuer: 'U.S. Federal Government',
         holder: 'user3',
-        issuanceDate: '2023-09-15T09:30:00Z',
+        issuanceDate: '2025-05-12T09:30:00Z',
         expirationDate: '2024-09-15T09:30:00Z',
         claims: {
           company: 'U.S. Federal Government',
@@ -167,8 +167,8 @@ const matchProfiles: { [key: string]: UserProfile } = {
     ],
     matches: ['user123'],
     conversations: ['conv3'],
-    createdAt: '2023-10-03T12:00:00Z',
-    lastActive: '2023-10-22T14:20:00Z'
+    createdAt: '2025-05-12T12:00:00Z',
+    lastActive: '2025-05-12T14:20:00Z'
   }
 };
 

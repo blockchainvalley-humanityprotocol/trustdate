@@ -24,7 +24,7 @@ const FloatingHeart = ({ size = 20, delay = 0, duration = 3, x = 0 }) => (
       ease: "easeInOut"
     }}
   >
-    <HeartIcon size={size} fill={true} color="#ff9ebb" />
+    <HeartIcon size={size} fill={true} color="#FF5858" />
   </motion.div>
 );
 
@@ -72,7 +72,7 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.5 }}
             >
-              TrustDate uses Humanity Protocol's verification system
+              Beats uses Humanity Protocol's verification system
               to help you find genuine connections. Experience true interest
               and matching verified by heart rate monitoring.
             </motion.p>
@@ -127,7 +127,7 @@ export default function Home() {
       <section className="w-full py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12 love-title">
-            The TrustDate Experience
+            The Beats Experience
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {/* Feature 1 */}
@@ -204,34 +204,39 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="w-full bg-neutral text-white py-10">
+      <footer className="w-full bg-gray-50 py-12">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4 love-title">TrustDate</h3>
-              <p className="text-gray-300">
-                Providing safe dating with verified identities based on Humanity Protocol.
-              </p>
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center mb-6 md:mb-0">
+              <h3 className="text-xl font-bold mb-4 love-title">Beats</h3>
+              <div className="flex space-x-4 ml-8">
+                <a href="#" className="text-gray-600 hover:text-love-pink">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                  </svg>
+                </a>
+                <a href="#" className="text-gray-600 hover:text-love-pink">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                  </svg>
+                </a>
+                <a href="#" className="text-gray-600 hover:text-love-pink">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </a>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-bold mb-4">Links</h3>
-              <ul className="space-y-2">
-                <li><Link href="/about" className="text-gray-300 hover:text-love-light">About</Link></li>
-                <li><Link href="/privacy" className="text-gray-300 hover:text-love-light">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="text-gray-300 hover:text-love-light">Terms of Service</Link></li>
-                <li><Link href="/contact" className="text-gray-300 hover:text-love-light">Contact</Link></li>
-              </ul>
+            <div className="text-center md:text-right">
+              <p className="text-gray-600 mb-2">support@beats.example</p>
+              <div className="flex justify-center md:justify-end space-x-4">
+                <a href="#" className="text-gray-600 hover:text-love-pink text-sm">Privacy Policy</a>
+                <a href="#" className="text-gray-600 hover:text-love-pink text-sm">Terms of Service</a>
+              </div>
+              <p className="text-gray-400">© 2025 Beats. Korea University Hackathon.</p>
             </div>
-            <div>
-              <h3 className="text-xl font-bold mb-4">Contact</h3>
-              <p className="text-gray-300">
-                Korea University Hackathon Project<br />
-                support@trustdate.example
-              </p>
-            </div>
-          </div>
-          <div className="border-t border-gray-700 pt-6 text-center">
-            <p className="text-gray-400">© 2023 TrustDate. Korea University Hackathon.</p>
           </div>
         </div>
       </footer>

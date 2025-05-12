@@ -20,7 +20,7 @@ const dummyProfile: UserProfile = {
       '@context': ['https://www.w3.org/ns/credentials/v2'],
       type: ['VerifiableCredential'],
       issuer: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
-      validFrom: '2023-10-15T09:30:00Z',
+      validFrom: '2025-05-12T09:30:00Z',
       validUntil: '',
       credentialSubject: {
         id: 'did:ethr:0xSample123456789abcdef0123456789abcdef01234567',
@@ -36,8 +36,8 @@ const dummyProfile: UserProfile = {
       },
       proof: {
         type: 'DataIntegrityProof',
-        cryptosuite: 'bbs-2023',
-        created: '2023-10-15T09:30:00Z',
+        cryptosuite: 'bbs-2025',
+        created: '2025-05-12T09:30:00Z',
         verificationMethod: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
         proofPurpose: 'assertionMethod',
         proofValue: 'SampleProofValue123456789012345678901234567890123456789012345678901234567890'
@@ -47,7 +47,7 @@ const dummyProfile: UserProfile = {
       '@context': ['https://www.w3.org/ns/credentials/v2'],
       type: ['VerifiableCredential'],
       issuer: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
-      validFrom: '2023-10-15T09:30:00Z',
+      validFrom: '2025-05-12T09:30:00Z',
       validUntil: '',
       credentialSubject: {
         id: 'did:ethr:0xSample123456789abcdef0123456789abcdef01234567',
@@ -62,8 +62,8 @@ const dummyProfile: UserProfile = {
       },
       proof: {
         type: 'DataIntegrityProof',
-        cryptosuite: 'bbs-2023',
-        created: '2023-10-15T09:30:00Z',
+        cryptosuite: 'bbs-2025',
+        created: '2025-05-12T09:30:00Z',
         verificationMethod: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
         proofPurpose: 'assertionMethod',
         proofValue: 'SampleProofValue123456789012345678901234567890123456789012345678901234567890'
@@ -73,11 +73,11 @@ const dummyProfile: UserProfile = {
       '@context': ['https://www.w3.org/ns/credentials/v2'],
       type: ['VerifiableCredential'],
       issuer: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
-      validFrom: '2023-10-15T09:30:00Z',
+      validFrom: '2025-05-12T09:30:00Z',
       validUntil: '',
       credentialSubject: {
         id: 'did:ethr:0xSample123456789abcdef0123456789abcdef01234567',
-        institution: 'Seoul National University',
+        institution: 'Korea University',
         degree: 'Computer Science'
       },
       id: 'urn:uuid:sample-uuid-12340987-6543-210f-edcb-a0987654321fe',
@@ -89,8 +89,8 @@ const dummyProfile: UserProfile = {
       },
       proof: {
         type: 'DataIntegrityProof',
-        cryptosuite: 'bbs-2023',
-        created: '2023-10-15T09:30:00Z',
+        cryptosuite: 'bbs-2025',
+        created: '2025-05-12T09:30:00Z',
         verificationMethod: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
         proofPurpose: 'assertionMethod',
         proofValue: 'SampleProofValue123456789012345678901234567890123456789012345678901234567890'
@@ -99,8 +99,8 @@ const dummyProfile: UserProfile = {
   ],
   matches: ['user1', 'user2', 'user3'],
   conversations: ['conv1', 'conv2', 'conv3'],
-  createdAt: '2023-10-01T00:00:00Z',
-  lastActive: '2023-10-22T18:30:00Z',
+  createdAt: '2025-05-12T00:00:00Z',
+  lastActive: '2025-05-12T18:30:00Z',
   walletAddress: '0xSample123456789abcdef0123456789abcdef01234567'
 };
 
@@ -179,7 +179,7 @@ const ProfilePage = () => {
           errorMessage = 'Unknown error';
         }
         
-        // 직접 API 테스트 결과 추가
+        // Direct API test result addition
         setApiTestResult(`API connection failed: ${errorMessage}. The API key is valid but an error occurred on the API server. Check server logs.`);
       }
     } catch (error: any) {

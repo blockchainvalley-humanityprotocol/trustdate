@@ -91,7 +91,7 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
         },
         proof: {
           type: 'DataIntegrityProof',
-          cryptosuite: 'bbs-2023',
+          cryptosuite: 'bbs-2025',
           created: new Date().toISOString(),
           verificationMethod: 'did:key:zSample12345678JLAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
           proofPurpose: 'assertionMethod',
