@@ -14,7 +14,7 @@ export default function Login() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // 이미 연결되어 있는지 확인
+    // Check if already connected
     const checkConnection = async () => {
       const result = await metamaskAuth.checkConnection();
       if (result.success && result.connected && result.address) {
@@ -31,40 +31,40 @@ export default function Login() {
     setError('');
 
     try {
-      // 메타마스크 연결
+      // Connect to MetaMask
       const connectResult = await metamaskAuth.connectWallet();
       
       if (!connectResult.success) {
-        throw new Error(connectResult.error || '메타마스크 연결 실패');
+        throw new Error(connectResult.error || 'Failed to connect MetaMask');
       }
 
       const { address } = connectResult;
       setAddress(address || '');
 
-      // 로그인 인증을 위한 메시지 서명
+      // Sign message for login authentication
       const nonce = Math.floor(Math.random() * 1000000).toString();
-      const message = `TrustDate 로그인 요청: ${nonce}`;
+      const message = `TrustDate Login Request: ${nonce}`;
       
       const signResult = await metamaskAuth.signMessage(message);
       
       if (!signResult.success) {
-        throw new Error(signResult.error || '메시지 서명 실패');
+        throw new Error(signResult.error || 'Failed to sign message');
       }
 
-      // 서명 성공 시 인증 완료 상태로 변경
+      // Set authenticated state on successful signature
       setIsAuthenticated(true);
       
-      // 실제 구현에서는 서버에 서명 검증 요청을 보내고 토큰을 받아옴
-      // 토큰을 받아오면 localStorage 등에 저장
+      // In actual implementation, send signature verification request to server and receive token
+      // Store token in localStorage or similar
       localStorage.setItem('userAddress', address || '');
       localStorage.setItem('userSignature', signResult.signature || '');
       
-      // 홈 화면으로 이동
+      // Navigate to home screen
       setTimeout(() => {
         router.push('/profile');
       }, 1000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
+      setError(err instanceof Error ? err.message : 'An unknown error occurred.');
     } finally {
       setLoading(false);
     }
@@ -72,13 +72,13 @@ export default function Login() {
 
   return (
     <main className="min-h-screen py-12 bg-gray-50">
-      {/* 헤더 */}
+      {/* Header */}
       <header className="w-full bg-white shadow-sm">
         <div className="container mx-auto flex justify-between items-center p-4">
           <Link href="/" className="text-2xl font-bold text-primary">TrustDate</Link>
           <nav className="flex gap-4">
-            <Link href="/login" className="btn btn-sm btn-primary">로그인</Link>
-            <Link href="/register" className="btn btn-sm btn-outline">회원가입</Link>
+            <Link href="/login" className="btn btn-sm btn-primary">Login</Link>
+            <Link href="/register" className="btn btn-sm btn-outline">Register</Link>
           </nav>
         </div>
       </header>
@@ -86,8 +86,8 @@ export default function Login() {
       <div className="container mx-auto px-4 mt-12">
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">로그인</h1>
-            <p className="text-gray-600">메타마스크로 안전하게 로그인하세요</p>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Login</h1>
+            <p className="text-gray-600">Login securely with MetaMask</p>
           </div>
 
           {isAuthenticated ? (
@@ -101,10 +101,10 @@ export default function Login() {
                   </div>
                 </div>
               </div>
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">인증 완료</h2>
-              <p className="text-gray-600 mb-4">지갑 주소: {address.slice(0, 6)}...{address.slice(-4)}</p>
+              <h2 className="text-xl font-semibold text-gray-800 mb-2">Authentication Complete</h2>
+              <p className="text-gray-600 mb-4">Wallet Address: {address.slice(0, 6)}...{address.slice(-4)}</p>
               <div className="animate-pulse">
-                <p className="text-primary">프로필 페이지로 이동합니다...</p>
+                <p className="text-primary">Redirecting to profile page...</p>
               </div>
             </div>
           ) : (
@@ -112,14 +112,14 @@ export default function Login() {
               <div className="bg-gray-50 p-6 rounded-lg mb-6 text-center">
                 <img 
                   src="/metamask-fox.svg" 
-                  alt="Metamask 로고" 
+                  alt="Metamask Logo" 
                   className="w-16 h-16 mx-auto mb-4"
                   onError={(e) => {
                     e.currentTarget.src = 'https://raw.githubusercontent.com/MetaMask/brand-resources/master/SVG/metamask-fox.svg';
                   }}
                 />
                 <p className="text-gray-700 mb-4">
-                  메타마스크 지갑을 연결하여 간편하게 로그인하세요. 안전한 블록체인 인증으로 신원을 보호합니다.
+                  Connect your MetaMask wallet for an easy login. Secure your identity with blockchain authentication.
                 </p>
                 <button 
                   onClick={handleMetamaskLogin} 
@@ -129,10 +129,10 @@ export default function Login() {
                   {loading ? (
                     <>
                       <span className="loading loading-spinner loading-sm mr-2"></span>
-                      연결 중...
+                      Connecting...
                     </>
                   ) : (
-                    '메타마스크로 로그인'
+                    'Login with MetaMask'
                   )}
                 </button>
                 {error && (
@@ -140,11 +140,11 @@ export default function Login() {
                 )}
               </div>
 
-              <div className="divider">또는</div>
+              <div className="divider">OR</div>
 
               <div className="text-center">
-                <p className="mb-4 text-gray-600">TrustDate가 처음이신가요?</p>
-                <Link href="/register" className="btn btn-outline btn-block">회원가입</Link>
+                <p className="mb-4 text-gray-600">New to TrustDate?</p>
+                <Link href="/register" className="btn btn-outline btn-block">Register</Link>
               </div>
             </div>
           )}

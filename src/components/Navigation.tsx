@@ -6,11 +6,11 @@ import { motion } from 'framer-motion';
 import HeartIcon from './HeartIcon';
 
 const navItems = [
-  { path: '/', label: '홈' },
-  { path: '/discover', label: '탐색' },
-  { path: '/matches', label: '매치' },
-  { path: '/messages', label: '메시지' },
-  { path: '/profile', label: '프로필' },
+  { path: '/', label: 'Home' },
+  { path: '/discover', label: 'Discover' },
+  { path: '/matches', label: 'Matches' },
+  { path: '/messages', label: 'Messages' },
+  { path: '/profile', label: 'Profile' },
 ];
 
 export default function Navigation() {
@@ -56,7 +56,7 @@ export default function Navigation() {
           })}
         </nav>
         
-        {/* 모바일 하단 탭 */}
+        {/* Mobile bottom tabs */}
         <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
           <div className="flex justify-around py-2">
             {navItems.map((item) => {

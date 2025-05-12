@@ -1,14 +1,14 @@
 import { ethers } from 'ethers';
 import Web3Modal from 'web3modal';
 
-// 메타마스크 인증 관련 함수
+// Functions related to MetaMask authentication
 export const metamaskAuth = {
-  // 메타마스크 연결 및 주소 반환
+  // Connect MetaMask and return address
   connectWallet: async () => {
     try {
-      // 사용자의 브라우저에 메타마스크가 설치되어 있는지 확인
+      // Check if MetaMask is installed in user's browser
       if (!window.ethereum) {
-        throw new Error('메타마스크를 설치해주세요!');
+        throw new Error('Please install MetaMask!');
       }
 
       const web3Modal = new Web3Modal({
@@ -28,19 +28,19 @@ export const metamaskAuth = {
         signer
       };
     } catch (error) {
-      console.error('메타마스크 연결 오류:', error);
+      console.error('MetaMask connection error:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
+        error: error instanceof Error ? error.message : 'An unknown error occurred.'
       };
     }
   },
 
-  // 메타마스크로 메시지 서명
+  // Sign message with MetaMask
   signMessage: async (message: string) => {
     try {
       if (!window.ethereum) {
-        throw new Error('메타마스크를 설치해주세요!');
+        throw new Error('Please install MetaMask!');
       }
 
       const web3Modal = new Web3Modal({
@@ -60,15 +60,15 @@ export const metamaskAuth = {
         signature
       };
     } catch (error) {
-      console.error('메시지 서명 오류:', error);
+      console.error('Message signing error:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
+        error: error instanceof Error ? error.message : 'An unknown error occurred.'
       };
     }
   },
 
-  // 메타마스크 연결 확인
+  // Check MetaMask connection
   checkConnection: async () => {
     try {
       if (!window.ethereum) {
@@ -98,16 +98,16 @@ export const metamaskAuth = {
         connected: false
       };
     } catch (error) {
-      console.error('연결 확인 오류:', error);
+      console.error('Connection check error:', error);
       return {
         success: false,
         connected: false,
-        error: error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
+        error: error instanceof Error ? error.message : 'An unknown error occurred.'
       };
     }
   },
 
-  // 메타마스크 연결 해제
+  // Disconnect MetaMask
   disconnectWallet: async () => {
     try {
       const web3Modal = new Web3Modal({
@@ -119,10 +119,10 @@ export const metamaskAuth = {
       
       return { success: true };
     } catch (error) {
-      console.error('연결 해제 오류:', error);
+      console.error('Disconnection error:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
+        error: error instanceof Error ? error.message : 'An unknown error occurred.'
       };
     }
   }

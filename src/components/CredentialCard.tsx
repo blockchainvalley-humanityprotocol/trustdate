@@ -6,7 +6,7 @@ interface CredentialCardProps {
 }
 
 const CredentialCard = ({ credential, showDetails = false }: CredentialCardProps) => {
-  // credentialSubject가 없는 경우를 대비한 안전한 접근
+  // Safe access in case credentialSubject is missing
   const subject = credential?.credentialSubject || {};
 
   const getCredentialIcon = () => {
@@ -46,16 +46,16 @@ const CredentialCard = ({ credential, showDetails = false }: CredentialCardProps
   };
 
   const getCredentialTitle = () => {
-    if (!subject) return '검증된 자격 증명';
+    if (!subject) return 'Verified Credential';
     
     if (subject.kyc) {
-      return '신원 검증됨';
+      return 'Identity Verified';
     } else if (subject.age) {
-      return `나이 ${subject.age}세`;
+      return `Age ${subject.age} years`;
     } else if (subject.institution) {
-      return `학력: ${subject.institution} ${subject.degree || ''}`;
+      return `Education: ${subject.institution} ${subject.degree || ''}`;
     } else {
-      return '검증된 자격 증명';
+      return 'Verified Credential';
     }
   };
 
@@ -76,7 +76,7 @@ const CredentialCard = ({ credential, showDetails = false }: CredentialCardProps
   const isActive = credential?.credentialStatus?.type === 'T3RevocationRegistry';
   const isRevoked = credential?.credentialStatus?.type === 'T3RevocationRegistry-revoked';
 
-  // DID를 간략화하는 함수 추가
+  // Function to abbreviate DIDs for display
   const formatDid = (did: string) => {
     if (!did) return '';
     if (did.startsWith('did:key:')) {
@@ -87,7 +87,7 @@ const CredentialCard = ({ credential, showDetails = false }: CredentialCardProps
     return did;
   };
 
-  // 자격 증명 정보가 없는 경우에 대한 처리
+  // Handle case when credential information is missing
   if (!credential) {
     return (
       <div className="rounded-lg p-4 shadow-sm bg-gray-100 text-gray-800">
@@ -96,8 +96,8 @@ const CredentialCard = ({ credential, showDetails = false }: CredentialCardProps
             {getDefaultIcon()}
           </div>
           <div>
-            <h3 className="font-semibold">정보 없음</h3>
-            <span className="text-xs font-medium bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded">오류</span>
+            <h3 className="font-semibold">No Information</h3>
+            <span className="text-xs font-medium bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded">Error</span>
           </div>
         </div>
       </div>
@@ -113,19 +113,19 @@ const CredentialCard = ({ credential, showDetails = false }: CredentialCardProps
         <div>
           <h3 className="font-semibold">{getCredentialTitle()}</h3>
           {isActive && !isRevoked ? (
-            <span className="text-xs font-medium bg-green-50 text-green-700 px-2 py-0.5 rounded">검증됨</span>
+            <span className="text-xs font-medium bg-green-50 text-green-700 px-2 py-0.5 rounded">Verified</span>
           ) : (
-            <span className="text-xs font-medium bg-red-50 text-red-700 px-2 py-0.5 rounded">취소됨</span>
+            <span className="text-xs font-medium bg-red-50 text-red-700 px-2 py-0.5 rounded">Revoked</span>
           )}
         </div>
       </div>
       
       {showDetails && (
         <div className="mt-3 text-sm">
-          <p className="text-xs truncate mb-1">발급자: {formatDid(credential.issuer || '')}</p>
-          <p>발급일: {credential.validFrom ? new Date(credential.validFrom).toLocaleDateString('ko-KR') : '정보 없음'}</p>
+          <p className="text-xs truncate mb-1">Issuer: {formatDid(credential.issuer || '')}</p>
+          <p>Issued: {credential.validFrom ? new Date(credential.validFrom).toLocaleDateString() : 'No information'}</p>
           {credential.validUntil && (
-            <p>만료일: {new Date(credential.validUntil).toLocaleDateString('ko-KR')}</p>
+            <p>Expires: {new Date(credential.validUntil).toLocaleDateString()}</p>
           )}
         </div>
       )}

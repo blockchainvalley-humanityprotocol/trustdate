@@ -218,7 +218,7 @@ const ProfileCard = ({
                 <p className="text-gray-700">{profile.bio}</p>
               </motion.div>
               
-              {/* 심장 박동수 모니터 또는 모달로 이동한 버튼 */}
+              {/* Heart rate monitor or modal button */}
               {showHeartRateMonitor && (
                 <div className="my-4">
                   <button 
@@ -227,8 +227,8 @@ const ProfileCard = ({
                   >
                     <HeartIcon size={20} fill={true} color="white" />
                     {isPassedHeartRateThreshold ? 
-                      "심장 박동 확인 완료!" : 
-                      "큰 사진으로 심장 박동 측정하기"}
+                      "Heart Rate Check Complete!" : 
+                      "Measure Heart Rate with Full Photo"}
                   </button>
                 </div>
               )}
@@ -242,7 +242,7 @@ const ProfileCard = ({
                 <motion.button 
                   onClick={flipCard} 
                   className="btn btn-circle btn-outline border-love-pink text-love-pink hover:bg-love-light/20 hover:border-love-pink"
-                  title="프로필 뒷면 보기"
+                  title="View Back of Profile"
                   whileHover={{ scale: 1.1, rotate: 10 }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -253,7 +253,7 @@ const ProfileCard = ({
                 <motion.button 
                   onClick={toggleDetails} 
                   className="btn btn-circle btn-outline border-love-pink text-love-pink hover:bg-love-light/20 hover:border-love-pink"
-                  title="상세 정보 보기"
+                  title="View Details"
                   whileHover={{ scale: 1.1, rotate: -10 }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -277,8 +277,8 @@ const ProfileCard = ({
                   >
                     <HeartIcon size={24} color="white" fill={true} pulse={isPassedHeartRateThreshold} />
                     {showHeartRateMonitor && !isPassedHeartRateThreshold
-                      ? "심장 박동수 측정 필요"
-                      : "관심 표시하기"}
+                      ? "Heart Rate Measurement Required"
+                      : "Show Interest"}
                   </motion.button>
                 )}
                 
@@ -287,20 +287,20 @@ const ProfileCard = ({
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    응답 대기 중
+                    Awaiting Response
                   </div>
                 )}
                 
                 {isMatched && (
                   <div className="badge bg-gradient-to-r from-love-pink to-love-purple text-white gap-2 p-4 shadow-md">
                     <HeartIcon size={20} fill={true} color="white" pulse={true} />
-                    매칭됨
+                    Matched
                   </div>
                 )}
               </div>
               
               <div className="text-xs text-gray-400 text-center mt-6">
-                마지막 접속: {new Date(profile.lastActive).toLocaleDateString('ko-KR')}
+                Last active: {new Date(profile.lastActive).toLocaleDateString()}
               </div>
             </div>
           </div>
@@ -313,7 +313,7 @@ const ProfileCard = ({
           }}>
             <div className="card-body p-6 bg-gradient-to-br from-white to-love-light/10">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="card-title text-xl love-title">상세 정보</h3>
+                <h3 className="card-title text-xl love-title">Detailed Information</h3>
                 <motion.button 
                   onClick={flipCard} 
                   className="btn btn-circle btn-sm bg-love-pink border-none hover:bg-love-dark"
@@ -326,7 +326,7 @@ const ProfileCard = ({
                 </motion.button>
               </div>
               
-              <div className="divider before:bg-love-pink/30 after:bg-love-pink/30">검증된 정보</div>
+              <div className="divider before:bg-love-pink/30 after:bg-love-pink/30">Verified Information</div>
               <div className="space-y-3 mb-6">
                 {profile.credentials.map(credential => (
                   <CredentialCard 
@@ -336,7 +336,7 @@ const ProfileCard = ({
                 ))}
               </div>
               
-              <div className="divider before:bg-love-pink/30 after:bg-love-pink/30">관심사</div>
+              <div className="divider before:bg-love-pink/30 after:bg-love-pink/30">Interests</div>
               <div className="flex flex-wrap gap-2 mb-6 justify-center">
                 {profile.interests.map((interest, index) => (
                   <motion.span 
@@ -355,7 +355,7 @@ const ProfileCard = ({
           </div>
         </motion.div>
         
-        {/* 상세 정보 패널 */}
+        {/* Detail panel */}
         <AnimatePresence>
           {showDetails && (
             <motion.div 
@@ -366,7 +366,7 @@ const ProfileCard = ({
               transition={{ duration: 0.3 }}
             >
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold love-title">상세 정보</h3>
+                <h3 className="text-xl font-bold love-title">Detailed Information</h3>
                 <motion.button 
                   onClick={toggleDetails} 
                   className="btn btn-circle btn-sm bg-love-pink border-none hover:bg-love-dark"
@@ -379,7 +379,7 @@ const ProfileCard = ({
                 </motion.button>
               </div>
               
-              <div className="divider before:bg-love-pink/30 after:bg-love-pink/30">검증된 정보</div>
+              <div className="divider before:bg-love-pink/30 after:bg-love-pink/30">Verified Information</div>
               <div className="space-y-3 mb-6">
                 {profile.credentials.map(credential => (
                   <CredentialCard 
@@ -389,7 +389,7 @@ const ProfileCard = ({
                 ))}
               </div>
               
-              <div className="divider before:bg-love-pink/30 after:bg-love-pink/30">관심사</div>
+              <div className="divider before:bg-love-pink/30 after:bg-love-pink/30">Interests</div>
               <div className="flex flex-wrap gap-2 mb-6 justify-center">
                 {profile.interests.map((interest, index) => (
                   <motion.span 
@@ -405,7 +405,7 @@ const ProfileCard = ({
           )}
         </AnimatePresence>
         
-        {/* 이미지 모달 */}
+        {/* Image modal */}
         <ProfileImageModal 
           isOpen={isImageModalOpen}
           onClose={() => setIsImageModalOpen(false)}

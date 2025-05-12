@@ -10,11 +10,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 // 더미 사용자 데이터
 const currentUser: UserProfile = {
   id: 'user123',
-  displayName: '홍준모',
-  bio: '블록체인과 AI 기술에 관심이 많은 개발자입니다. 새로운 기술과 혁신적인 아이디어에 흥미가 있습니다.',
+  displayName: 'John Mo',
+  bio: 'Developer interested in blockchain and AI technology. Fascinated by new technologies and innovative ideas.',
   avatarUrl: '/images/default.jpg',
-  location: '서울시 강남구',
-  interests: ['블록체인', '인공지능', '프로그래밍', '혁신기술', '창업'],
+  location: 'Gangnam, Seoul',
+  interests: ['Blockchain', 'Artificial Intelligence', 'Programming', 'Innovative Tech', 'Startups'],
   credentials: [],
   matches: ['user1', 'user2', 'user3'],
   conversations: ['conv1', 'conv2', 'conv3'],
@@ -26,11 +26,11 @@ const currentUser: UserProfile = {
 const partnerProfiles: { [key: string]: UserProfile } = {
   user1: {
     id: 'user1',
-    displayName: '비탈릭 부테린',
-    bio: '이더리움의 창시자이자 블록체인 기술의 선구자입니다. 암호화폐와 탈중앙화 기술에 관심이 많으며 개발자 커뮤니티에 기여하고 있습니다.',
+    displayName: 'Vitalik Buterin',
+    bio: 'Founder of Ethereum and pioneer in blockchain technology. Interested in cryptocurrency and decentralized technology, and contributing to the developer community.',
     avatarUrl: '/images/eth1.png',
-    location: '싱가포르',
-    interests: ['블록체인', '암호화폐', '프로그래밍', '철학', '탈중앙화'],
+    location: 'Singapore',
+    interests: ['Blockchain', 'Cryptocurrency', 'Programming', 'Philosophy', 'Decentralization'],
     credentials: [],
     matches: ['user123'],
     conversations: ['conv1'],
@@ -39,11 +39,11 @@ const partnerProfiles: { [key: string]: UserProfile } = {
   },
   user2: {
     id: 'user2',
-    displayName: '일론 머스크',
-    bio: '테슬라와 스페이스X의 CEO이자 X(트위터)의 소유주입니다. 혁신적인 기술과 우주 여행, 지속 가능한 에너지에 열정을 가지고 있습니다.',
+    displayName: 'Elon Musk',
+    bio: 'CEO of Tesla and SpaceX, and owner of X (Twitter). Passionate about innovative technology, space travel, and sustainable energy.',
     avatarUrl: '/images/musk1.png',
-    location: '텍사스 오스틴',
-    interests: ['우주여행', '전기차', '인공지능', '지속가능성', '화성 이주'],
+    location: 'Austin, Texas',
+    interests: ['Space Travel', 'Electric Vehicles', 'AI', 'Sustainability', 'Mars Colonization'],
     credentials: [],
     matches: ['user123'],
     conversations: ['conv2'],
@@ -52,11 +52,11 @@ const partnerProfiles: { [key: string]: UserProfile } = {
   },
   user3: {
     id: 'user3',
-    displayName: '도널드 트럼프',
-    bio: '미국의 전 대통령이자 사업가입니다. 부동산 개발과 정치에서 활발히 활동했으며, 소셜 미디어 플랫폼 Truth Social의 설립자입니다.',
+    displayName: 'Donald Trump',
+    bio: 'Former U.S. President and businessman. Active in real estate development and politics, and founder of the social media platform Truth Social.',
     avatarUrl: '/images/trump1.png',
-    location: '플로리다 팜비치',
-    interests: ['골프', '정치', '부동산', '협상', '미디어'],
+    location: 'Palm Beach, Florida',
+    interests: ['Golf', 'Politics', 'Real Estate', 'Negotiation', 'Media'],
     credentials: [],
     matches: ['user123'],
     conversations: ['conv3'],
@@ -76,7 +76,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         conversationId: 'conv1',
         senderId: 'user1',
         receiverId: 'user123',
-        content: '안녕하세요! 제 프로필에 관심을 가져주셔서 감사합니다. 블록체인 개발자시라고요?',
+        content: 'Hello! Thank you for showing interest in my profile. Are you a blockchain developer?',
         createdAt: '2023-10-20T09:30:00Z',
         read: true
       },
@@ -85,7 +85,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         conversationId: 'conv1',
         senderId: 'user123',
         receiverId: 'user1',
-        content: '비탈릭님! 정말 팬입니다. 이더리움 백서를 보고 블록체인 개발에 입문했습니다.',
+        content: 'Vitalik! I\'m a huge fan. I got into blockchain development after reading the Ethereum whitepaper.',
         createdAt: '2023-10-20T09:35:00Z',
         read: true
       },
@@ -94,7 +94,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         conversationId: 'conv1',
         senderId: 'user1',
         receiverId: 'user123',
-        content: '와, 정말 기쁘네요. 현재 어떤 프로젝트에 관심을 가지고 계신가요? DeFi나 NFT 분야에서 일하시나요?',
+        content: 'Wow, that\'s great to hear. What kind of projects are you interested in? Are you working in DeFi or NFTs?',
         createdAt: '2023-10-20T09:40:00Z',
         read: true
       },
@@ -103,7 +103,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         conversationId: 'conv1',
         senderId: 'user123',
         receiverId: 'user1',
-        content: '최근에는 영지식 증명(ZK)과 Layer 2 솔루션에 관심이 많습니다. 이더리움 확장성이 정말 중요하다고 생각해요.',
+        content: 'Recently I\'ve been very interested in Zero-Knowledge Proofs (ZK) and Layer 2 solutions. I think Ethereum scalability is really important.',
         createdAt: '2023-10-20T09:45:00Z',
         read: true
       },
@@ -112,7 +112,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         conversationId: 'conv1',
         senderId: 'user1',
         receiverId: 'user123',
-        content: '영지식 증명은 정말 흥미로운 분야죠! 롤업과 함께 이더리움의 미래입니다. 다음 주에 싱가포르에서 개발자 밋업이 있는데, 참석하실래요?',
+        content: 'Zero-knowledge proofs are fascinating! They\'re the future of Ethereum along with rollups. There\'s a developer meetup in Singapore next week, would you like to join?',
         createdAt: '2023-10-20T09:50:00Z',
         read: true
       }
@@ -129,7 +129,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         conversationId: 'conv2',
         senderId: 'user123',
         receiverId: 'user2',
-        content: '일론님, 테슬라와 스페이스X의 혁신적인 기술에 정말 감명받았습니다. 특히 스타쉽 프로젝트가 인상적이에요.',
+        content: 'Elon, I\'m really impressed by Tesla and SpaceX\'s innovative technologies. The Starship project is particularly impressive.',
         createdAt: '2023-10-21T14:30:00Z',
         read: true
       },
@@ -138,7 +138,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         conversationId: 'conv2',
         senderId: 'user2',
         receiverId: 'user123',
-        content: '관심 가져줘서 고마워요! 스타쉽은 화성 이주를 위한 중요한 발걸음이죠. 당신도 우주 여행에 관심이 있나요?',
+        content: 'Thanks for your interest! Starship is an important step toward Mars colonization. Are you interested in space travel too?',
         createdAt: '2023-10-21T14:35:00Z',
         read: true
       },
@@ -147,7 +147,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         conversationId: 'conv2',
         senderId: 'user123',
         receiverId: 'user2',
-        content: '물론이죠! 언젠가 민간 우주 여행이 일반화되면 꼭 참여하고 싶습니다. 화성에서 살아볼 수 있다면 정말 꿈같을 것 같아요.',
+        content: 'Absolutely! I would love to participate in civilian space travel if it becomes more accessible. Living on Mars would be a dream come true.',
         createdAt: '2023-10-21T14:40:00Z',
         read: true
       },
@@ -156,7 +156,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         conversationId: 'conv2',
         senderId: 'user2',
         receiverId: 'user123',
-        content: '멋지네요! 화성은 인류의 다중행성 문명을 위한 첫 걸음이 될 겁니다. 혹시 AI나 신경과학에도 관심이 있으신가요? 뉴럴링크에서 흥미로운 프로젝트들이 진행 중입니다.',
+        content: 'Great! Mars will be the first step in humanity\'s multi-planetary civilization. Are you also interested in AI or neuroscience? We\'re working on some exciting projects at Neuralink.',
         createdAt: '2023-10-21T14:45:00Z',
         read: false
       }
@@ -173,7 +173,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         conversationId: 'conv3',
         senderId: 'user3',
         receiverId: 'user123',
-        content: '안녕하세요, 홍준모님. 관심 가져주셔서 감사합니다. 한국의 기술 산업은 정말 대단하더군요.',
+        content: 'Hello, John. Thanks for your interest. Korea\'s technology industry is truly impressive.',
         createdAt: '2023-10-22T10:15:00Z',
         read: true
       },
@@ -182,7 +182,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         conversationId: 'conv3',
         senderId: 'user123',
         receiverId: 'user3',
-        content: '트럼프 대통령님, 메시지 감사합니다! 네, 한국의 기술 산업은 빠르게 성장하고 있습니다. 부동산 개발에도 관심이 많으신 것으로 알고 있는데, 어떤 프로젝트가 가장 기억에 남으시나요?',
+        content: 'Thank you for your message, President Trump! Yes, Korea\'s tech industry is growing rapidly. I understand you\'re also interested in real estate development - which project do you find most memorable?',
         createdAt: '2023-10-22T10:20:00Z',
         read: true
       },
@@ -191,7 +191,7 @@ const dummyConversations: { [key: string]: Conversation } = {
         conversationId: 'conv3',
         senderId: 'user3',
         receiverId: 'user123',
-        content: '트럼프 타워는 내 경력에서 가장 자랑스러운 프로젝트 중 하나입니다. 위치, 디자인, 품질이 모두 최고죠. 협상에서 가장 중요한 것은 자신감과 강한 입장을 유지하는 것입니다. 당신이 개발자라고 들었는데, Truth Social 같은 플랫폼에 관심 있으신가요?',
+        content: 'Trump Tower is one of the most proud projects in my career. Top location, design, and quality. In negotiation, the most important thing is confidence and maintaining a strong position. I heard you\'re a developer - are you interested in platforms like Truth Social?',
         createdAt: '2023-10-22T10:25:00Z',
         read: true
       }
@@ -275,7 +275,7 @@ const MessagesPage = () => {
 
   return (
     <div className="container mx-auto p-4 max-w-6xl mt-4 mb-24">
-      <h1 className="text-3xl mb-8 love-title">내 메시지</h1>
+      <h1 className="text-3xl mb-8 love-title">My Messages</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* 대화 목록 */}
@@ -283,7 +283,7 @@ const MessagesPage = () => {
           <div className="love-card p-0 overflow-hidden">
             <div className="p-4 bg-gradient-to-r from-love-pink/70 to-love-purple/70 text-white flex items-center">
               <HeartIcon size={22} fill={true} color="white" className="mr-2" />
-              <h2 className="text-xl font-bold">대화 목록</h2>
+              <h2 className="text-xl font-bold">Conversations</h2>
             </div>
             <div className="overflow-y-auto max-h-[75vh]">
               {sortedConversations.map(conversation => {
@@ -328,7 +328,7 @@ const MessagesPage = () => {
                       </div>
                       <div className="flex items-center justify-between">
                         <p className="text-sm truncate text-gray-600 flex-1">
-                          {lastMessage.senderId === currentUser.id ? '나: ' : ''}
+                          {lastMessage.senderId === currentUser.id ? 'Me: ' : ''}
                           {lastMessage.content}
                         </p>
                         {unreadCount > 0 && (
@@ -397,7 +397,7 @@ const MessagesPage = () => {
                   whileHover={{ scale: 1.05 }}
                 >
                   <HeartIcon size={16} className="mr-1" />
-                  다른 대화로 돌아가기
+                  Back to conversations
                 </motion.button>
               </div>
             </>
@@ -406,9 +406,9 @@ const MessagesPage = () => {
               <div className="mb-6 inline-block">
                 <HeartIcon size={80} color="#ff9ebb" pulse={true} />
               </div>
-              <h3 className="text-2xl font-semibold mb-4 love-title">대화를 선택해주세요</h3>
+              <h3 className="text-2xl font-semibold mb-4 love-title">Select a conversation</h3>
               <p className="text-gray-600 mb-8">
-                왼쪽 대화 목록에서 대화를 선택하면 메시지를 볼 수 있어요.
+                Choose a conversation from the list on the left to view messages.
               </p>
             </div>
           )}

@@ -11,11 +11,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 // 더미 사용자 데이터
 const currentUser: UserProfile = {
   id: 'user123',
-  displayName: '홍준모',
-  bio: '블록체인과 AI 기술에 관심이 많은 개발자입니다. 새로운 기술과 혁신적인 아이디어에 흥미가 있습니다.',
+  displayName: 'John Mo',
+  bio: 'Developer interested in blockchain and AI technology. Fascinated by new technologies and innovative ideas.',
   avatarUrl: '/images/default.jpg',
-  location: '서울시 강남구',
-  interests: ['블록체인', '인공지능', '프로그래밍', '혁신기술', '창업'],
+  location: 'Gangnam, Seoul',
+  interests: ['Blockchain', 'Artificial Intelligence', 'Programming', 'Innovative Tech', 'Startups'],
   credentials: [],
   matches: ['user1', 'user2', 'user3'],
   conversations: ['conv1', 'conv2', 'conv3'],
@@ -52,22 +52,22 @@ const dummyMatches: Match[] = [
 const matchProfiles: { [key: string]: UserProfile } = {
   user1: {
     id: 'user1',
-    displayName: '비탈릭 부테린',
-    bio: '이더리움의 창시자이자 블록체인 기술의 선구자입니다. 암호화폐와 탈중앙화 기술에 관심이 많으며 개발자 커뮤니티에 기여하고 있습니다.',
+    displayName: 'Vitalik Buterin',
+    bio: 'Founder of Ethereum and pioneer in blockchain technology. Interested in cryptocurrency and decentralized technology, and contributing to the developer community.',
     avatarUrl: '/images/eth1.png',
-    location: '싱가포르',
-    interests: ['블록체인', '암호화폐', '프로그래밍', '철학', '탈중앙화'],
+    location: 'Singapore',
+    interests: ['Blockchain', 'Cryptocurrency', 'Programming', 'Philosophy', 'Decentralization'],
     credentials: [
       {
         id: 'cred1_1',
         type: 'education',
-        issuer: 'University of Waterloo',
+        issuer: 'University of Toronto',
         holder: 'user1',
         issuanceDate: '2023-09-01T09:30:00Z',
         expirationDate: '2026-09-01T09:30:00Z',
         claims: {
-          institution: '토론토 대학교',
-          degree: '컴퓨터과학'
+          institution: 'University of Toronto',
+          degree: 'Computer Science'
         },
         status: 'active'
       },
@@ -79,8 +79,8 @@ const matchProfiles: { [key: string]: UserProfile } = {
         issuanceDate: '2023-09-01T09:30:00Z',
         expirationDate: '2026-09-01T09:30:00Z',
         claims: {
-          company: '이더리움 재단',
-          position: '창립자'
+          company: 'Ethereum Foundation',
+          position: 'Founder'
         },
         status: 'active'
       }
@@ -92,11 +92,11 @@ const matchProfiles: { [key: string]: UserProfile } = {
   },
   user2: {
     id: 'user2',
-    displayName: '일론 머스크',
-    bio: '테슬라와 스페이스X의 CEO이자 X(트위터)의 소유주입니다. 혁신적인 기술과 우주 여행, 지속 가능한 에너지에 열정을 가지고 있습니다.',
+    displayName: 'Elon Musk',
+    bio: 'CEO of Tesla and SpaceX, and owner of X (Twitter). Passionate about innovative technology, space travel, and sustainable energy.',
     avatarUrl: '/images/musk1.png',
-    location: '텍사스 오스틴',
-    interests: ['우주여행', '전기차', '인공지능', '지속가능성', '화성 이주'],
+    location: 'Austin, Texas',
+    interests: ['Space Travel', 'Electric Vehicles', 'AI', 'Sustainability', 'Mars Colonization'],
     credentials: [
       {
         id: 'cred2_3',
@@ -106,8 +106,8 @@ const matchProfiles: { [key: string]: UserProfile } = {
         issuanceDate: '2023-09-05T09:30:00Z',
         expirationDate: '2026-09-05T09:30:00Z',
         claims: {
-          institution: '펜실베니아 대학교',
-          degree: '물리학 & 경제학'
+          institution: 'University of Pennsylvania',
+          degree: 'Physics & Economics'
         },
         status: 'active'
       },
@@ -119,7 +119,7 @@ const matchProfiles: { [key: string]: UserProfile } = {
         issuanceDate: '2023-09-05T09:30:00Z',
         expirationDate: '2026-09-05T09:30:00Z',
         claims: {
-          company: '테슬라, 스페이스X',
+          company: 'Tesla, SpaceX',
           position: 'CEO'
         },
         status: 'active'
@@ -132,35 +132,35 @@ const matchProfiles: { [key: string]: UserProfile } = {
   },
   user3: {
     id: 'user3',
-    displayName: '도널드 트럼프',
-    bio: '미국의 전 대통령이자 사업가입니다. 부동산 개발과 정치에서 활발히 활동했으며, 소셜 미디어 플랫폼 Truth Social의 설립자입니다.',
+    displayName: 'Donald Trump',
+    bio: 'Former U.S. President and businessman. Active in real estate development and politics, and founder of the social media platform Truth Social.',
     avatarUrl: '/images/trump1.png',
-    location: '플로리다 팜비치',
-    interests: ['골프', '정치', '부동산', '협상', '미디어'],
+    location: 'Palm Beach, Florida',
+    interests: ['Golf', 'Politics', 'Real Estate', 'Negotiation', 'Media'],
     credentials: [
       {
         id: 'cred3_3',
         type: 'education',
-        issuer: 'Wharton School of Business',
+        issuer: 'Wharton School',
         holder: 'user3',
         issuanceDate: '2023-09-10T09:30:00Z',
         expirationDate: '2026-09-10T09:30:00Z',
         claims: {
-          institution: '와튼 스쿨',
-          degree: '경제학'
+          institution: 'Wharton School',
+          degree: 'Economics'
         },
         status: 'active'
       },
       {
         id: 'cred3_4',
         type: 'employment',
-        issuer: 'United States Government',
+        issuer: 'U.S. Federal Government',
         holder: 'user3',
         issuanceDate: '2023-09-15T09:30:00Z',
         expirationDate: '2024-09-15T09:30:00Z',
         claims: {
-          company: '미국 연방정부',
-          position: '전 대통령'
+          company: 'U.S. Federal Government',
+          position: 'Former President'
         },
         status: 'active'
       }
@@ -267,14 +267,14 @@ const MatchesPage = () => {
         </div>
       )}
 
-      <h1 className="text-3xl love-title mb-8">내 매치</h1>
+      <h1 className="text-3xl love-title mb-8">My Matches</h1>
 
       {loading ? (
         <div className="h-64 w-full flex flex-col items-center justify-center">
           <div className="relative w-20 h-20">
             <HeartIcon size={80} pulse={true} color="#ff9ebb" />
           </div>
-          <p className="mt-4 text-love-pink">매치 정보를 불러오는 중...</p>
+          <p className="mt-4 text-love-pink">Loading match information...</p>
         </div>
       ) : (
         <div className="space-y-10">
@@ -289,7 +289,7 @@ const MatchesPage = () => {
               >
                 <div className="flex items-center mb-6">
                   <HeartIcon size={24} color="#ff9ebb" className="mr-2" />
-                  <h2 className="text-2xl font-semibold">대기중인 매치</h2>
+                  <h2 className="text-2xl font-semibold">Pending Matches</h2>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   {pendingMatches.map(match => {
@@ -323,7 +323,7 @@ const MatchesPage = () => {
                           </div>
                           <p className="text-gray-700 mb-4">{partnerProfile.bio.substring(0, 100)}...</p>
                           <div className="flex items-center gap-2 mb-4">
-                            <span className="text-sm font-medium text-love-dark">관심사:</span>
+                            <span className="text-sm font-medium text-love-dark">Interests:</span>
                             <div className="flex flex-wrap gap-1">
                               {partnerProfile.interests.slice(0, 3).map((interest, index) => (
                                 <motion.span 
@@ -343,7 +343,7 @@ const MatchesPage = () => {
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                             >
-                              거절하기
+                              Reject
                             </motion.button>
                             <motion.button 
                               onClick={() => acceptMatch(match.id)}
@@ -352,7 +352,7 @@ const MatchesPage = () => {
                               whileTap={{ scale: 0.95 }}
                             >
                               <HeartIcon size={20} fill={true} color="#ffffff" className="mr-1" />
-                              수락하기
+                              Accept
                             </motion.button>
                           </div>
                         </div>
@@ -368,7 +368,7 @@ const MatchesPage = () => {
           <div>
             <div className="flex items-center mb-6">
               <HeartIcon size={24} color="#ff9ebb" pulse={true} className="mr-2" />
-              <h2 className="text-2xl font-semibold">매칭된 프로필</h2>
+              <h2 className="text-2xl font-semibold">Matched Profiles</h2>
             </div>
             {acceptedMatches.length > 0 ? (
               <div className="grid md:grid-cols-2 gap-6">
@@ -395,7 +395,7 @@ const MatchesPage = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                             </svg>
-                            메시지 보내기
+                            Send Message
                           </motion.button>
                         </Link>
                       </div>
@@ -413,13 +413,13 @@ const MatchesPage = () => {
                 <div className="mb-6 inline-block">
                   <HeartIcon size={80} color="#ffcbd7" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4 love-title">아직 매칭된 프로필이 없어요</h3>
+                <h3 className="text-xl font-semibold mb-4 love-title">No matches yet</h3>
                 <p className="text-gray-600 mb-6">
-                  탐색 페이지에서 관심 있는 프로필을 찾아보세요.<br />
-                  진정한 설렘을 찾아드립니다!
+                  Find interesting profiles in the Discover page.<br />
+                  We'll help you find true excitement!
                 </p>
                 <LoveButton href="/discover" size="lg">
-                  프로필 탐색하기
+                  Explore Profiles
                 </LoveButton>
               </motion.div>
             )}

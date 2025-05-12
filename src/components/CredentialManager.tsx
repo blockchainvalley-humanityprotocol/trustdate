@@ -15,7 +15,7 @@ interface CredentialManagerProps {
 
 const CredentialManager: React.FC<CredentialManagerProps> = ({
   user,
-  walletAddress = '0xSample123456789abcdef0123456789abcdef01234567', // 샘플 지갑 주소
+  walletAddress = '0xSample123456789abcdef0123456789abcdef01234567', // Sample wallet address
   onCredentialIssued,
   onCredentialRevoked
 }) => {
@@ -28,36 +28,36 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
   const [claimType, setClaimType] = useState<string>('kyc');
   const [claimValue, setClaimValue] = useState<string>('');
   
-  // 사용자 인증 정보 조회
+  // Retrieve user's credentials
   const fetchCredentials = async () => {
     setLoading(true);
     setError(null);
     
     try {
-      // 실제 API 호출 (테스트/개발 환경에서는 주석 처리)
+      // Actual API call (commented out in test/dev environment)
       // const fetchedCredentials = await humanityApi.listCredentials(walletAddress);
       
-      // 개발용 더미 데이터 (실제 환경에서는 주석 처리)
+      // Development dummy data (comment out in production)
       const fetchedCredentials = user.credentials || [];
       
       setCredentials(fetchedCredentials);
     } catch (error) {
-      console.error('인증 정보 조회 오류:', error);
-      setError('인증 정보를 불러오는 중 오류가 발생했습니다.');
+      console.error('Error retrieving credentials:', error);
+      setError('An error occurred while loading credentials.');
     } finally {
       setLoading(false);
     }
   };
 
-  // 초기 로딩
+  // Initial loading
   useEffect(() => {
     fetchCredentials();
   }, [walletAddress, user]);
 
-  // 인증 정보 발급
+  // Issue credential
   const issueCredential = async () => {
     if (!claimType || !claimValue) {
-      setError('클레임 타입과 값을 모두 입력해주세요.');
+      setError('Please enter both claim type and value.');
       return;
     }
     
@@ -68,10 +68,10 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
     try {
       const claims = { [claimType]: claimValue };
       
-      // 실제 API 호출 (테스트/개발 환경에서는 주석 처리)
+      // Actual API call (commented out in test/dev environment)
       // const newCredential = await humanityApi.issueCredential(claims, walletAddress);
       
-      // 개발용 더미 데이터 생성 (실제 환경에서는 주석 처리)
+      // Development dummy data creation (comment out in production)
       const newCredential: VerifiableCredential = {
         '@context': ['https://www.w3.org/ns/credentials/v2'],
         type: ['VerifiableCredential'],
@@ -101,31 +101,31 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
       
       if (newCredential) {
         setCredentials(prev => [...prev, newCredential]);
-        setSuccess('인증 정보가 성공적으로 발급되었습니다.');
+        setSuccess('Credential issued successfully.');
         
-        // 폼 초기화
+        // Reset form
         setClaimType('kyc');
         setClaimValue('');
         setShowIssuanceForm(false);
         
-        // 부모 컴포넌트에 알림
+        // Notify parent component
         if (onCredentialIssued) {
           onCredentialIssued(newCredential);
         }
       } else {
-        setError('인증 정보 발급에 실패했습니다.');
+        setError('Failed to issue credential.');
       }
     } catch (error) {
-      console.error('인증 정보 발급 오류:', error);
-      setError('인증 정보 발급 중 오류가 발생했습니다.');
+      console.error('Error issuing credential:', error);
+      setError('An error occurred while issuing credential.');
     } finally {
       setLoading(false);
     }
   };
 
-  // 인증 정보 취소
+  // Revoke credential
   const revokeCredential = async (credentialId: string) => {
-    if (!confirm('이 인증 정보를 취소하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+    if (!confirm('Are you sure you want to revoke this credential? This action cannot be undone.')) {
       return;
     }
     
@@ -134,43 +134,43 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
     setSuccess(null);
     
     try {
-      // 실제 API 호출 (테스트/개발 환경에서는 주석 처리)
+      // Actual API call (commented out in test/dev environment)
       // const success = await humanityApi.revokeCredential(credentialId);
       
-      // 개발용 더미 응답 (실제 환경에서는 주석 처리)
+      // Development dummy response (comment out in production)
       const success = true;
       
       if (success) {
-        // 로컬 상태 업데이트
+        // Update local state
         setCredentials(prev => 
           prev.map(cred => 
             cred.id === credentialId ? { ...cred, status: 'revoked' } : cred
           )
         );
-        setSuccess('인증 정보가 성공적으로 취소되었습니다.');
+        setSuccess('Credential revoked successfully.');
         
-        // 부모 컴포넌트에 알림
+        // Notify parent component
         if (onCredentialRevoked) {
           onCredentialRevoked(credentialId);
         }
       } else {
-        setError('인증 정보 취소에 실패했습니다.');
+        setError('Failed to revoke credential.');
       }
     } catch (error) {
-      console.error('인증 정보 취소 오류:', error);
-      setError('인증 정보 취소 중 오류가 발생했습니다.');
+      console.error('Error revoking credential:', error);
+      setError('An error occurred while revoking credential.');
     } finally {
       setLoading(false);
     }
   };
 
-  // 클레임 타입 옵션
+  // Claim type options
   const claimTypeOptions = [
     { value: 'kyc', label: 'KYC' },
-    { value: 'age', label: '연령 인증' },
-    { value: 'education', label: '학력 인증' },
-    { value: 'employment', label: '직업 인증' },
-    { value: 'interests', label: '관심사 인증' }
+    { value: 'age', label: 'Age Verification' },
+    { value: 'education', label: 'Education Verification' },
+    { value: 'employment', label: 'Employment Verification' },
+    { value: 'interests', label: 'Interests Verification' }
   ];
 
   // DID를 간략화하는 함수 추가
@@ -199,18 +199,18 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold flex items-center">
           <HeartIcon size={24} color="#ff9ebb" className="mr-2" />
-          인증 정보 관리
+          Credential Management
         </h2>
         <button
           onClick={() => setShowIssuanceForm(!showIssuanceForm)}
           className="btn btn-sm btn-primary"
           disabled={loading}
         >
-          {showIssuanceForm ? '취소' : '인증 정보 추가'}
+          {showIssuanceForm ? 'Cancel' : 'Add Credential'}
         </button>
       </div>
       
-      {/* 알림 메시지 */}
+      {/* Notification messages */}
       <AnimatePresence>
         {error && (
           <motion.div 
@@ -235,7 +235,7 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
         )}
       </AnimatePresence>
       
-      {/* 인증 정보 발급 폼 */}
+      {/* Credential issuance form */}
       <AnimatePresence>
         {showIssuanceForm && (
           <motion.div 
@@ -245,12 +245,12 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <h3 className="text-lg font-semibold mb-4">새 인증 정보 발급</h3>
+            <h3 className="text-lg font-semibold mb-4">Issue New Credential</h3>
             
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  클레임 타입
+                  Claim Type
                 </label>
                 <select
                   value={claimType}
@@ -268,14 +268,14 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  클레임 값
+                  Claim Value
                 </label>
                 <input
                   type="text"
                   value={claimValue}
                   onChange={(e) => setClaimValue(e.target.value)}
                   className="input input-bordered w-full"
-                  placeholder="클레임 값 입력"
+                  placeholder="Enter claim value"
                   disabled={loading}
                 />
               </div>
@@ -289,10 +289,10 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
                   {loading ? (
                     <>
                       <span className="loading loading-spinner loading-xs mr-2"></span>
-                      발급 중...
+                      Issuing...
                     </>
                   ) : (
-                    '인증 정보 발급'
+                    'Issue Credential'
                   )}
                 </button>
               </div>
@@ -301,9 +301,9 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
         )}
       </AnimatePresence>
       
-      {/* 인증 정보 목록 */}
+      {/* Credential list */}
       <div>
-        <h3 className="text-lg font-semibold mb-4">내 인증 정보</h3>
+        <h3 className="text-lg font-semibold mb-4">My Credentials</h3>
         
         {loading && credentials.length === 0 ? (
           <div className="flex justify-center items-center h-32">
@@ -325,21 +325,21 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
                   <div>
                     <div className="flex items-center">
                       <h4 className="font-semibold">
-                        {credential.credentialSubject.kyc ? '신원 인증' : 
-                         credential.credentialSubject.age ? `나이 ${credential.credentialSubject.age}세` :
-                         credential.credentialSubject.institution ? `학력: ${credential.credentialSubject.institution}` :
-                         '검증된 자격 증명'}
+                        {credential.credentialSubject.kyc ? 'Identity Verification' : 
+                         credential.credentialSubject.age ? `Age ${credential.credentialSubject.age} years` :
+                         credential.credentialSubject.institution ? `Education: ${credential.credentialSubject.institution}` :
+                         'Verified Credential'}
                       </h4>
                       <span className="ml-2 badge badge-success badge-sm">
-                        활성
+                        Active
                       </span>
                     </div>
                     
                     <div className="mt-2 text-sm text-gray-500">
-                      <p>발급자: {formatDid(credential.issuer)}</p>
-                      <p>발급일: {new Date(credential.validFrom).toLocaleDateString('ko-KR')}</p>
+                      <p>Issuer: {formatDid(credential.issuer)}</p>
+                      <p>Issued: {new Date(credential.validFrom).toLocaleDateString()}</p>
                       <div className="mt-2">
-                        <p className="font-medium">클레임:</p>
+                        <p className="font-medium">Claims:</p>
                         <ul className="list-disc list-inside pl-2">
                           {Object.entries(credential.credentialSubject)
                             .filter(([key]) => key !== 'id')
@@ -361,7 +361,7 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
                     className="btn btn-error btn-xs"
                     disabled={loading}
                   >
-                    취소
+                    Revoke
                   </button>
                 </div>
               </motion.div>
@@ -370,19 +370,19 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
         ) : (
           <div className="text-center py-10 bg-gray-50 rounded-lg">
             <p className="text-gray-500">
-              아직 발급된 인증 정보가 없습니다.
+              You don't have any credentials yet.
             </p>
             <button
               onClick={() => setShowIssuanceForm(true)}
               className="btn btn-primary btn-sm mt-4"
             >
-              인증 정보 발급하기
+              Issue a Credential
             </button>
           </div>
         )}
       </div>
       
-      {/* 선택된 인증 정보 상세 모달 */}
+      {/* Selected credential detail modal */}
       <AnimatePresence>
         {selectedCredential && (
           <motion.div
@@ -400,7 +400,7 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold">인증 정보 상세</h3>
+                <h3 className="text-xl font-bold">Credential Details</h3>
                 <button
                   onClick={() => setSelectedCredential(null)}
                   className="btn btn-sm btn-circle"
@@ -416,42 +416,42 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
                 </div>
                 
                 <div>
-                  <p className="text-sm text-gray-500">타입</p>
+                  <p className="text-sm text-gray-500">Type</p>
                   <p className="font-medium">
                     {selectedCredential.type.join(', ')}
                   </p>
                 </div>
                 
                 <div>
-                  <p className="text-sm text-gray-500">발급자</p>
+                  <p className="text-sm text-gray-500">Issuer</p>
                   <p className="font-medium">{formatDid(selectedCredential.issuer)}</p>
                 </div>
                 
                 <div>
-                  <p className="text-sm text-gray-500">사용자 ID</p>
+                  <p className="text-sm text-gray-500">Subject ID</p>
                   <p className="font-medium truncate">{formatDid(selectedCredential.credentialSubject.id)}</p>
                 </div>
                 
                 <div>
-                  <p className="text-sm text-gray-500">발급일</p>
+                  <p className="text-sm text-gray-500">Issued Date</p>
                   <p className="font-medium">
-                    {new Date(selectedCredential.validFrom).toLocaleDateString('ko-KR')}
+                    {new Date(selectedCredential.validFrom).toLocaleDateString()}
                   </p>
                 </div>
                 
                 {selectedCredential.validUntil && (
                   <div>
-                    <p className="text-sm text-gray-500">만료일</p>
+                    <p className="text-sm text-gray-500">Expiry Date</p>
                     <p className="font-medium">
                       {selectedCredential.validUntil 
-                        ? new Date(selectedCredential.validUntil).toLocaleDateString('ko-KR') 
-                        : '무기한'}
+                        ? new Date(selectedCredential.validUntil).toLocaleDateString() 
+                        : 'No expiration'}
                     </p>
                   </div>
                 )}
                 
                 <div>
-                  <p className="text-sm text-gray-500 mb-2">클레임</p>
+                  <p className="text-sm text-gray-500 mb-2">Claims</p>
                   <div className="bg-gray-50 p-3 rounded-lg">
                     {Object.entries(selectedCredential.credentialSubject)
                       .filter(([key]) => key !== 'id')
@@ -473,7 +473,7 @@ const CredentialManager: React.FC<CredentialManagerProps> = ({
                     className="btn btn-error"
                     disabled={loading}
                   >
-                    인증 정보 취소
+                    Revoke Credential
                   </button>
                 </div>
               </div>

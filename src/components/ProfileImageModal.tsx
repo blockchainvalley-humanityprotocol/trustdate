@@ -25,7 +25,7 @@ const ProfileImageModal = ({
   const [floatingHearts, setFloatingHearts] = useState<Array<{id: number, x: number, y: number, delay: number}>>([]);
   const [isHeartRateComplete, setIsHeartRateComplete] = useState(false);
   
-  // 모달이 열릴 때 랜덤 하트 생성
+  // Create random hearts when modal opens
   useEffect(() => {
     if (isOpen) {
       const newHearts = Array.from({ length: 8 }).map((_, index) => ({
@@ -41,14 +41,14 @@ const ProfileImageModal = ({
     }
   }, [isOpen]);
 
-  // 심장 박동수 측정 완료 핸들러
+  // Heart rate measurement complete handler
   const handleHeartRateMeasured = (data: HeartRateData) => {
     setIsHeartRateComplete(true);
     if (onHeartRateMeasured) {
       onHeartRateMeasured(data);
     }
     
-    // 측정 완료 후 추가 하트 이펙트 생성
+    // Create additional heart effect after measurement is complete
     if (data.percentageChange >= 15) {
       const celebrationHearts = Array.from({ length: 15 }).map((_, index) => ({
         id: Date.now() + 100 + index,
@@ -60,7 +60,7 @@ const ProfileImageModal = ({
     }
   };
 
-  // ESC 키로 모달 닫기
+  // Close modal with ESC key
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -81,7 +81,7 @@ const ProfileImageModal = ({
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden">
-          {/* 백드롭 */}
+          {/* Backdrop */}
           <motion.div 
             className="absolute inset-0 bg-black/80 backdrop-blur-sm"
             initial={{ opacity: 0 }}
@@ -90,7 +90,7 @@ const ProfileImageModal = ({
             onClick={onClose}
           />
           
-          {/* 플로팅 하트 애니메이션 */}
+          {/* Floating heart animations */}
           {floatingHearts.map((heart) => (
             <motion.div
               key={heart.id}
@@ -117,7 +117,7 @@ const ProfileImageModal = ({
             </motion.div>
           ))}
           
-          {/* 모달 컨텐츠 */}
+          {/* Modal content */}
           <motion.div 
             className="bg-white rounded-xl shadow-2xl overflow-y-auto z-10 max-w-5xl w-full max-h-[90vh] relative flex flex-col"
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -125,7 +125,7 @@ const ProfileImageModal = ({
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: 'spring', damping: 25 }}
           >
-            {/* 닫기 버튼 */}
+            {/* Close button */}
             <button 
               className="absolute top-4 right-4 z-20 btn btn-circle btn-sm bg-white/80 hover:bg-white border-none shadow-md"
               onClick={onClose}
@@ -135,7 +135,7 @@ const ProfileImageModal = ({
               </svg>
             </button>
             
-            {/* 대형 이미지 섹션 */}
+            {/* Large image section */}
             <div className="w-full bg-gray-100">
               <img 
                 src={imgError ? "/images/default.jpg" : profile.avatarUrl} 
@@ -157,17 +157,17 @@ const ProfileImageModal = ({
               </div>
             </div>
             
-            {/* 심장 박동수 측정 섹션 - 명확하게 구분되도록 배경색 변경 */}
+            {/* Heart rate measurement section - with distinct background color */}
             <div className="p-6 flex flex-col bg-white">
               <h3 className="text-2xl font-bold love-title mb-4">
                 <HeartIcon size={24} color="#ff9ebb" fill={true} className="inline-block mr-2" />
-                {isHeartRateComplete ? '심장 박동 결과' : '심장 박동 측정'}
+                {isHeartRateComplete ? 'Heart Rate Results' : 'Heart Rate Measurement'}
               </h3>
               
               <p className="text-gray-600 mb-4">
                 {isHeartRateComplete ? 
-                  `${profile.displayName}님의 사진을 보면서 느끼는 설렘을 측정했습니다.` : 
-                  `${profile.displayName}님의 사진을 보며 당신의 심장이 어떻게 반응하는지 측정해보세요. 진짜 설렘이 있어야 매칭이 가능합니다!`
+                  `We measured how your heart reacts while viewing ${profile.displayName}'s photo.` : 
+                  `Measure how your heart reacts while viewing ${profile.displayName}'s photo. Real excitement is required for matching!`
                 }
               </p>
               
@@ -184,7 +184,7 @@ const ProfileImageModal = ({
                   onClick={onClose}
                   className="btn btn-outline w-full border-love-pink text-love-pink hover:bg-love-light/20 hover:border-love-pink"
                 >
-                  {isHeartRateComplete ? '결과 확인하고 돌아가기' : '나중에 측정하기'}
+                  {isHeartRateComplete ? 'Check Results and Return' : 'Measure Later'}
                 </button>
               </div>
             </div>
