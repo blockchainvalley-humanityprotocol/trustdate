@@ -2,7 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pacifico&display=swap');
+@font-face {
+  font-family: 'HK Grotesk';
+  src: url('/fonts/hk-grotesk/HKGrotesk-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'HK Grotesk';
+  src: url('/fonts/hk-grotesk/HKGrotesk-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'HK Grotesk';
+  src: url('/fonts/hk-grotesk/HKGrotesk-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'HK Grotesk';
+  src: url('/fonts/hk-grotesk/HKGrotesk-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'HK Grotesk';
+  src: url('/fonts/hk-grotesk/HKGrotesk-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'HK Grotesk';
+  src: url('/fonts/hk-grotesk/HKGrotesk-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 :root {
   --love-gradient: linear-gradient(135deg, #ff9ebb 0%, #ffcbd7 50%, #d9a9ff 100%);
@@ -11,16 +59,18 @@
 
 body {
   background-color: #fffafa;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'HK Grotesk', sans-serif;
   color: #322c3b;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
+  font-family: 'HK Grotesk', sans-serif;
 }
 
 .love-title {
-  font-family: 'Pacifico', cursive;
+  font-family: 'HK Grotesk', sans-serif;
+  font-weight: 700;
   background: var(--love-gradient);
   -webkit-background-clip: text;
   background-clip: text;
