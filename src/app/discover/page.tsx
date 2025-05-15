@@ -312,19 +312,6 @@ const DiscoverPage = () => {
 
   return (
     <main className="min-h-screen py-12 bg-gray-50">
-      {/* Header */}
-      <header className="w-full bg-white shadow-sm fixed top-0 z-10">
-        <div className="container mx-auto flex justify-between items-center p-4">
-          <Link href="/" className="text-2xl font-bold text-primary">TrustDate</Link>
-          <nav className="flex gap-6">
-            <Link href="/discover" className="text-primary">Discover</Link>
-            <Link href="/matches" className="hover:text-primary">Matches</Link>
-            <Link href="/messages" className="hover:text-primary">Messages</Link>
-            <Link href="/profile" className="hover:text-primary">Profile</Link>
-          </nav>
-        </div>
-      </header>
-
       <div className="container mx-auto px-4 mt-20">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Filter sidebar */}

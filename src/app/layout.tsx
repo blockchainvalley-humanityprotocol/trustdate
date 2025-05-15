@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en" data-theme="beats">
       <body>
         <Navigation />
-        <div className="pt-16 md:pt-20 pb-16 md:pb-6 min-h-screen bg-gradient-to-b from-white to-love-light/5">
+        <div className="pt-24 md:pt-28 pb-16 md:pb-6 min-h-screen bg-gradient-to-b from-white to-love-light/5">
           {children}
         </div>
       </body>

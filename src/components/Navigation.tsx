@@ -24,14 +24,14 @@ export default function Navigation() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="container mx-auto flex justify-between items-center p-4">
+      <div className="container mx-auto flex justify-between items-center p-5">
         <Link href="/" className="text-2xl font-bold love-title flex items-center gap-2">
           <img 
             src="/images/logo.png" 
             alt="Beats Logo" 
-            width={100} 
-            height={40} 
-            className="h-10 w-auto" 
+            width={300} 
+            height={120} 
+            className="h-20 w-auto max-h-full" 
           />
         </Link>
         

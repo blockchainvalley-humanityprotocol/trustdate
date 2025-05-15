@@ -17,8 +17,8 @@ const currentUser: UserProfile = {
   location: 'Gangnam, Seoul',
   interests: ['Blockchain', 'Artificial Intelligence', 'Programming', 'Innovative Tech', 'Startups'],
   credentials: [],
-  matches: ['user1', 'user2', 'user3'],
-  conversations: ['conv1', 'conv2', 'conv3'],
+  matches: ['user1', 'user3'],
+  conversations: ['conv1', 'conv3'],
   createdAt: '2025-05-12T00:00:00Z',
   lastActive: '2025-05-12T18:30:00Z'
 };
@@ -31,13 +31,6 @@ const dummyMatches: Match[] = [
     status: 'accepted',
     createdAt: '2025-05-12T09:00:00Z',
     updatedAt: '2025-05-12T10:00:00Z'
-  },
-  {
-    id: 'match2',
-    users: ['user123', 'user2'],
-    status: 'accepted',
-    createdAt: '2025-05-12T14:00:00Z',
-    updatedAt: '2025-05-12T15:30:00Z'
   },
   {
     id: 'match3',
@@ -89,46 +82,6 @@ const matchProfiles: { [key: string]: UserProfile } = {
     conversations: ['conv1'],
     createdAt: '2025-05-12T12:00:00Z',
     lastActive: '2025-05-12T15:45:00Z'
-  },
-  user2: {
-    id: 'user2',
-    displayName: 'Elon Musk',
-    bio: 'CEO of Tesla and SpaceX, and owner of X (Twitter). Passionate about innovative technology, space travel, and sustainable energy.',
-    avatarUrl: '/images/musk1.png',
-    location: 'Austin, Texas',
-    interests: ['Space Travel', 'Electric Vehicles', 'AI', 'Sustainability', 'Mars Colonization'],
-    credentials: [
-      {
-        id: 'cred2_3',
-        type: 'education',
-        issuer: 'University of Pennsylvania',
-        holder: 'user2',
-        issuanceDate: '2025-05-12T09:30:00Z',
-        expirationDate: '2026-09-05T09:30:00Z',
-        claims: {
-          institution: 'University of Pennsylvania',
-          degree: 'Physics & Economics'
-        },
-        status: 'active'
-      },
-      {
-        id: 'cred2_4',
-        type: 'employment',
-        issuer: 'Tesla & SpaceX',
-        holder: 'user2',
-        issuanceDate: '2025-05-12T09:30:00Z',
-        expirationDate: '2026-09-05T09:30:00Z',
-        claims: {
-          company: 'Tesla, SpaceX',
-          position: 'CEO'
-        },
-        status: 'active'
-      }
-    ],
-    matches: ['user123'],
-    conversations: ['conv2'],
-    createdAt: '2025-05-12T12:00:00Z',
-    lastActive: '2025-05-12T10:30:00Z'
   },
   user3: {
     id: 'user3',
@@ -210,7 +163,7 @@ const MatchesPage = () => {
   };
 
   // 매치의 상대방 ID 찾기
-  const getPartnerIdFromMatch = (match: Match) => {
+  const getPartnerIdFromMatch = (match: Match): string => {
     return match.users.find(userId => userId !== currentUser.id) || '';
   };
 

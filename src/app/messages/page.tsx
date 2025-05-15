@@ -16,8 +16,8 @@ const currentUser: UserProfile = {
   location: 'Gangnam, Seoul',
   interests: ['Blockchain', 'Artificial Intelligence', 'Programming', 'Innovative Tech', 'Startups'],
   credentials: [],
-  matches: ['user1', 'user2', 'user3'],
-  conversations: ['conv1', 'conv2', 'conv3'],
+  matches: ['user1', 'user3'],
+  conversations: ['conv1', 'conv3'],
   createdAt: '2025-05-12T00:00:00Z',
   lastActive: '2025-05-12T18:30:00Z'
 };
@@ -36,19 +36,6 @@ const partnerProfiles: { [key: string]: UserProfile } = {
     conversations: ['conv1'],
     createdAt: '2025-05-12T12:00:00Z',
     lastActive: '2025-05-12T15:45:00Z'
-  },
-  user2: {
-    id: 'user2',
-    displayName: 'Elon Musk',
-    bio: 'CEO of Tesla and SpaceX, and owner of X (Twitter). Passionate about innovative technology, space travel, and sustainable energy.',
-    avatarUrl: '/images/musk1.png',
-    location: 'Austin, Texas',
-    interests: ['Space Travel', 'Electric Vehicles', 'AI', 'Sustainability', 'Mars Colonization'],
-    credentials: [],
-    matches: ['user123'],
-    conversations: ['conv2'],
-    createdAt: '2025-05-12T12:00:00Z',
-    lastActive: '2025-05-12T10:30:00Z'
   },
   user3: {
     id: 'user3',
@@ -119,50 +106,6 @@ const dummyConversations: { [key: string]: Conversation } = {
     ],
     createdAt: '2025-05-12T09:30:00Z',
     lastMessageAt: '2025-05-12T09:50:00Z'
-  },
-  conv2: {
-    id: 'conv2',
-    participants: ['user123', 'user2'],
-    messages: [
-      {
-        id: 'msg2_1',
-        conversationId: 'conv2',
-        senderId: 'user123',
-        receiverId: 'user2',
-        content: 'Elon, I\'m really impressed by Tesla and SpaceX\'s innovative technologies. The Starship project is particularly impressive.',
-        createdAt: '2025-05-12T14:30:00Z',
-        read: true
-      },
-      {
-        id: 'msg2_2',
-        conversationId: 'conv2',
-        senderId: 'user2',
-        receiverId: 'user123',
-        content: 'Thanks for your interest! Starship is an important step toward Mars colonization. Are you interested in space travel too?',
-        createdAt: '2025-05-12T14:35:00Z',
-        read: true
-      },
-      {
-        id: 'msg2_3',
-        conversationId: 'conv2',
-        senderId: 'user123',
-        receiverId: 'user2',
-        content: 'Absolutely! I would love to participate in civilian space travel if it becomes more accessible. Living on Mars would be a dream come true.',
-        createdAt: '2025-05-12T14:40:00Z',
-        read: true
-      },
-      {
-        id: 'msg2_4',
-        conversationId: 'conv2',
-        senderId: 'user2',
-        receiverId: 'user123',
-        content: 'Great! Mars will be the first step in humanity\'s multi-planetary civilization. Are you also interested in AI or neuroscience? We\'re working on some exciting projects at Neuralink.',
-        createdAt: '2025-05-12T14:45:00Z',
-        read: false
-      }
-    ],
-    createdAt: '2025-05-12T14:30:00Z',
-    lastMessageAt: '2025-05-12T14:45:00Z'
   },
   conv3: {
     id: 'conv3',

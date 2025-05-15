@@ -657,17 +657,6 @@ export default function Register() {
   
   return (
     <main className="min-h-screen py-12 bg-gray-50">
-      {/* Header */}
-      <header className="w-full bg-white shadow-sm">
-        <div className="container mx-auto flex justify-between items-center p-4">
-          <Link href="/" className="text-2xl font-bold text-primary">TrustDate</Link>
-          <nav className="flex gap-4">
-            <Link href="/login" className="btn btn-sm btn-outline">Login</Link>
-            <Link href="/register" className="btn btn-sm btn-primary">Register</Link>
-          </nav>
-        </div>
-      </header>
-
       <div className="container mx-auto px-4 mt-12">
         <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
           <div className="text-center mb-8">
